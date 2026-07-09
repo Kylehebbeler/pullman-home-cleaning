@@ -1,0 +1,25 @@
+name: Post-clean Review Request
+
+on:
+  schedule:
+    # 9 AM PDT = 4 PM UTC (summer). Adjust to 5 PM UTC (0 17) Nov-Mar for PST.
+    - cron: '0 16 * * *'
+  workflow_dispatch:
+
+jobs:
+  send-review-request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install
+      - name: Send post-clean review requests
+        run: node netlify/functions/_runner.js send-review-request
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          GOOGLE_REVIEW_URL: ${{ secrets.GOOGLE_REVIEW_URL }}
+          SITE_URL: https://pullmanhomecleaning.com

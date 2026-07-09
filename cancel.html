@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cancel Booking — Pullman Home Cleaning</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#111111;--bg2:#1a1a1a;--bg3:#222222;--brand:#0B6E72;--brand-dim:rgba(11,110,114,0.12);--brand-border:rgba(11,110,114,0.40);--teal:#1D9E75;--teal-dim:rgba(29,158,117,0.13);--teal-border:rgba(29,158,117,0.38);--text:rgba(255,255,255,0.90);--text-mid:rgba(255,255,255,0.58);--text-low:rgba(255,255,255,0.32);--border:rgba(255,255,255,0.08);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;}
+.hdr{background:var(--bg);border-bottom:0.5px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;}
+.hdr-ico{width:36px;height:36px;border-radius:8px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px rgba(255,255,255,0.25);}
+.hdr-ico img{width:100%;height:100%;object-fit:contain;}
+.hdr-name{font-family:'DM Serif Display',serif;font-size:16px;color:#fff;}
+.hdr-sub{font-size:11px;color:var(--text-low);text-transform:uppercase;letter-spacing:.07em;}
+.page{max-width:480px;margin:0 auto;padding:48px 20px 80px;width:100%;}
+.card{background:var(--bg2);border:1.5px solid var(--border);border-radius:16px;padding:28px;}
+.icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 20px;}
+.icon.warn{background:rgba(220,85,50,0.15);border:1.5px solid rgba(220,85,50,0.3);}
+.icon.ok{background:var(--teal-dim);border:1.5px solid var(--teal-border);}
+h1{font-family:'DM Serif Display',serif;font-size:24px;color:#fff;text-align:center;margin-bottom:8px;}
+.sub{font-size:14px;color:var(--text-mid);text-align:center;line-height:1.6;margin-bottom:24px;}
+.detail-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:0.5px solid var(--border);font-size:14px;}
+.detail-row:last-of-type{border-bottom:none;}
+.detail-key{color:var(--text-mid);flex-shrink:0;margin-right:12px;}
+.detail-val{color:var(--text);font-weight:600;text-align:right;}
+.btn-cancel{width:100%;padding:14px;border-radius:10px;background:var(--brand);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;border:none;cursor:pointer;margin-top:24px;transition:opacity .15s;}
+.btn-cancel:hover{opacity:.88;}
+.btn-cancel:disabled{opacity:.5;cursor:not-allowed;}
+.btn-back{width:100%;padding:13px;border-radius:10px;background:transparent;color:var(--text-mid);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;border:1.5px solid var(--border);cursor:pointer;margin-top:10px;transition:all .15s;}
+.btn-back:hover{border-color:rgba(255,255,255,0.2);color:var(--text);}
+.err{background:rgba(220,85,50,0.12);border:1.5px solid rgba(220,85,50,0.3);border-radius:8px;padding:12px 14px;font-size:13px;color:#f08070;margin-top:16px;display:none;}
+.loading{text-align:center;padding:48px 0;color:var(--text-mid);}
+.spinner{width:28px;height:28px;border:2.5px solid var(--border);border-top-color:var(--brand);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.late-note{background:rgba(255,180,0,0.08);border:1.5px solid rgba(255,180,0,0.2);border-radius:8px;padding:12px 14px;font-size:13px;color:rgba(255,200,80,0.9);margin-bottom:16px;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-ico"><img src="logo-header.svg" alt="logo"></div>
+  <div>
+    <div class="hdr-name">Pullman Home Cleaning</div>
+    <div class="hdr-sub">Cancel Booking</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="card" id="main">
+    <div class="loading"><div class="spinner"></div>Loading your booking…</div>
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const bookingId = params.get('id');
+const email = params.get('email');
+
+function fmt(el, booking) {
+  const apptDate = new Date(booking.date + 'T00:00:00');
+  const now = new Date();
+  const hoursUntil = (apptDate - now) / 36e5;
+  const within24 = hoursUntil < 24;
+  const dateStr = apptDate.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+
+  el.innerHTML = `
+    <div class="icon warn">✕</div>
+    <h1>Cancel Booking?</h1>
+    <p class="sub">Please confirm you'd like to cancel the following appointment.</p>
+    ${within24 ? `<div class="late-note">⚠ Your appointment is within 24 hours. Cancellations within 24 hours may not be eligible for a full refund.</div>` : ''}
+    <div class="detail-row"><span class="detail-key">Service</span><span class="detail-val">${booking.service}</span></div>
+    <div class="detail-row"><span class="detail-key">Date</span><span class="detail-val">${dateStr} at ${booking.time}</span></div>
+    <div class="detail-row"><span class="detail-key">Address</span><span class="detail-val">${booking.address}${booking.unit&&booking.unit!=='N/A'?', Unit '+booking.unit:''}</span></div>
+    <div class="detail-row"><span class="detail-key">Amount Paid</span><span class="detail-val">$${Number(booking.price).toFixed(2)}</span></div>
+    <div class="err" id="err"></div>
+    <button class="btn-cancel" id="confirm-btn" onclick="confirmCancel()">Yes, Cancel My Booking</button>
+    <button class="btn-back" onclick="window.close()">Keep My Booking</button>`;
+}
+
+function showDone(refunded, subscriptionCancelled) {
+  let msg = '';
+  if (subscriptionCancelled) {
+    msg = 'Your subscription has been cancelled — no future charges will be made. ';
+  }
+  if (refunded) {
+    msg += 'A refund for this appointment has been issued. It may take 5–10 business days to appear on your statement.';
+  } else {
+    msg += 'This appointment has been cancelled.' + (!subscriptionCancelled ? ' No refund is issued for cancellations within 24 hours of the appointment.' : '');
+  }
+  document.getElementById('main').innerHTML = `
+    <div class="icon ok">✓</div>
+    <h1>${subscriptionCancelled ? 'Subscription Cancelled' : 'Booking Cancelled'}</h1>
+    <p class="sub">${msg}</p>`;
+}
+
+function showErr(msg) {
+  const e = document.getElementById('err');
+  if (e) { e.style.display='block'; e.textContent=msg; }
+  const btn = document.getElementById('confirm-btn');
+  if (btn) { btn.disabled=false; btn.textContent='Yes, Cancel My Booking'; }
+}
+
+async function confirmCancel() {
+  const btn = document.getElementById('confirm-btn');
+  btn.disabled = true;
+  btn.textContent = 'Cancelling…';
+  try {
+    const resp = await fetch('/.netlify/functions/cancel-booking', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ bookingId, email })
+    });
+    const data = await resp.json();
+    if (!resp.ok || data.error) { showErr(data.error || 'Something went wrong. Please email us to cancel.'); return; }
+    showDone(data.refunded, data.subscriptionCancelled);
+  } catch(e) {
+    showErr('Something went wrong. Please email pullmanhomecleaning@gmail.com to cancel.');
+  }
+}
+
+async function loadBooking() {
+  if (!bookingId || !email) {
+    document.getElementById('main').innerHTML = `<h1 style="text-align:center;margin-bottom:12px">Invalid Link</h1><p style="text-align:center;color:var(--text-mid)">This cancel link is invalid or has expired. Please email pullmanhomecleaning@gmail.com.</p>`;
+    return;
+  }
+  try {
+    const resp = await fetch('/.netlify/functions/cancel-booking', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ bookingId, email, lookupOnly: true })
+    });
+    const data = await resp.json();
+    if (!resp.ok || data.error) {
+      document.getElementById('main').innerHTML = `<h1 style="text-align:center;margin-bottom:12px">Booking Not Found</h1><p style="text-align:center;color:var(--text-mid)">${data.error || 'This booking may have already been cancelled.'}</p>`;
+      return;
+    }
+    fmt(document.getElementById('main'), data.booking);
+  } catch(e) {
+    document.getElementById('main').innerHTML = `<h1 style="text-align:center;margin-bottom:12px">Error</h1><p style="text-align:center;color:var(--text-mid)">Could not load booking. Please email pullmanhomecleaning@gmail.com.</p>`;
+  }
+}
+
+loadBooking();
+</script>
+</body>
+</html>

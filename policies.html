@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Policies — Pullman Home Cleaning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F9F7F4;
+    --ink: #1A1A1A;
+    --ink-muted: #5A5A5A;
+    --ink-faint: #AAAAAA;
+    --green: #0B6E72;
+    --green-light: #E0F4F5;
+    --accent: #0B6E72;
+    --white: #FFFFFF;
+    --border: rgba(26,26,26,0.1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 58px;
+  }
+  .nav-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-brand img {
+    width: 32px; height: 32px; border-radius: 7px; object-fit: contain;
+    box-shadow: 0 0 0 1.5px rgba(0,0,0,0.08);
+  }
+  .nav-cta {
+    background: var(--green);
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 13px 32px;
+    border-radius: 100px;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--accent); }
+
+  /* PAGE HEADER */
+  .page-header {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 60% 80% at 95% 0%, rgba(11,110,114,0.12) 0%, transparent 60%),
+      var(--cream);
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(26,26,26,0.09) 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .page-header-inner {
+    position: relative;
+    z-index: 1;
+    padding: 56px 5vw 48px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .page-eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--green-light);
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+  .page-header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .page-header-sub {
+    font-size: 16px;
+    color: var(--ink-muted);
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 5vw 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .policy-block {
+    padding: 36px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .policy-block:last-child {
+    border-bottom: none;
+  }
+
+  .policy-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+  .policy-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(22px, 3vw, 28px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .policy-body {
+    font-size: 15px;
+    color: var(--ink-muted);
+    line-height: 1.75;
+    max-width: 640px;
+  }
+  .policy-body p { margin-bottom: 12px; }
+  .policy-body p:last-child { margin-bottom: 0; }
+
+  .policy-callout {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 18px;
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.6;
+    max-width: 560px;
+  }
+  .policy-callout strong {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--border);
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--ink);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .footer-note {
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  @media (max-width: 680px) {
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* FADE IN */
+  @keyframes fadeUp { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
+  .page-header-inner > * { animation: fadeUp .45s ease forwards; }
+  .page-header-inner > *:nth-child(1) { animation-delay: .05s; }
+  .page-header-inner > *:nth-child(2) { animation-delay: .12s; }
+  .page-header-inner > *:nth-child(3) { animation-delay: .2s; }
+  @media (prefers-reduced-motion: reduce) { .page-header-inner > * { animation: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/"><img src="logo-header-demo2.svg" alt="logo">Pullman Home Cleaning</a>
+  <a class="nav-cta" href="booking.html">Book a clean</a>
+</nav>
+
+<header class="page-header">
+  <div class="page-header-inner">
+    <div class="page-eyebrow">Policies</div>
+    <h1>What to expect from us</h1>
+    <p class="page-header-sub">Clear, straightforward policies so you always know where you stand. No surprises.</p>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="policy-block">
+    <div class="policy-label">Cancellations &amp; Rescheduling</div>
+    <h2 class="policy-title">Cancel or reschedule anytime — just give us notice</h2>
+    <div class="policy-body">
+      <p>You can cancel or reschedule at no charge as long as you let us know at least <strong>24 hours before your scheduled appointment</strong>. To cancel or reschedule, reply to your confirmation text or email us directly.</p>
+      <p>If you cancel or reschedule with less than 24 hours' notice, a <strong>25% charge</strong> of the service price will apply. This covers our cleaner's time and reserved slot.</p>
+    </div>
+    <div class="policy-callout">
+      <strong>Free cancellation:</strong> 24+ hours before your appointment.<br>
+      <strong>Late cancellation fee:</strong> 25% of service price if cancelled under 24 hours.
+    </div>
+  </div>
+
+  <div class="policy-block">
+    <div class="policy-label">Lockouts &amp; No Access</div>
+    <h2 class="policy-title">We'll check in the day before — please be ready to let us in</h2>
+    <div class="policy-body">
+      <p>We send a confirmation text the evening before your appointment. If we don't hear back from you or can't confirm access, we may reach out again the morning of your clean.</p>
+      <p><strong>Someone needs to be present to let the cleaner in.</strong> You don't need to stay for the duration of the clean — just be available at the start to open the door.</p>
+      <p>Our cleaner will wait up to <strong>15 minutes</strong> after the scheduled start time. If we are still unable to enter after 15 minutes, the appointment will be marked as a lockout and a <strong>50% charge</strong> will apply.</p>
+    </div>
+    <div class="policy-callout">
+      <strong>Confirmation text:</strong> sent the evening before.<br>
+      <strong>Access required:</strong> be present at the start to let us in — you may leave after.<br>
+      <strong>Grace period:</strong> 15 minutes at the door.<br>
+      <strong>No-access fee:</strong> 50% of service price.
+    </div>
+  </div>
+
+  <div class="policy-block">
+    <div class="policy-label">Scope of Work</div>
+    <h2 class="policy-title">What we clean — and what we don't</h2>
+    <div class="policy-body">
+      <p>Our services cover the areas listed in your selected package. Unless specifically included in your booking, the following are not part of any clean: dishes, laundry, interior appliances (oven, fridge), exterior windows, garages, patios, and any area not listed in your package description.</p>
+      <p>If you have specific requests beyond the standard scope, contact us before booking so we can confirm whether they can be accommodated and whether an adjusted price applies.</p>
+    </div>
+    <div class="policy-callout">
+      <strong>Not included by default:</strong> dishes, laundry, appliance interiors, exterior windows, garages, and patios.<br>
+      <strong>Special requests:</strong> contact us before booking.
+    </div>
+  </div>
+
+  <div class="policy-block">
+    <div class="policy-label">Pet Fee</div>
+    <h2 class="policy-title">Homes with pets include a $10 pet fee</h2>
+    <div class="policy-body">
+      <p>If you have pets in your home, a flat <strong>$10 pet fee</strong> is added to every booking. This covers the extra time required to manage fur and pet-related messes so your cleaner can do a thorough job.</p>
+      <p>You'll be asked about pets during checkout and the fee is included automatically if you select "Yes." The fee applies to all service types — one-time, subscription, and deep cleans.</p>
+    </div>
+    <div class="policy-callout">
+      <strong>Pet fee:</strong> +$10 per visit for homes with pets.<br>
+      <strong>Applies to:</strong> all service types.
+    </div>
+  </div>
+
+  <div class="policy-block">
+    <div class="policy-label">Right to Refuse Service</div>
+    <h2 class="policy-title">We reserve the right to decline or leave in unsafe conditions</h2>
+    <div class="policy-body">
+      <p>Our cleaners have the right to refuse or stop a clean if the property has conditions that are unsafe or present a health risk — including pest infestations, biohazards, sewage issues, or levels of clutter that make safe cleaning impossible.</p>
+      <p>If a cleaner leaves due to unsafe conditions, a <strong>50% charge</strong> will apply to cover their time and travel. We will notify you immediately and you are welcome to rebook once the conditions have been addressed.</p>
+    </div>
+    <div class="policy-callout">
+      <strong>Unsafe conditions include:</strong> pests, biohazards, sewage, or extreme clutter.<br>
+      <strong>Early departure fee:</strong> 50% of service price.
+    </div>
+  </div>
+
+  <div class="policy-block">
+    <div class="policy-label">Pre-Existing Damage</div>
+    <h2 class="policy-title">We are not responsible for damage that existed before our arrival</h2>
+    <div class="policy-body">
+      <p>We are not liable for damage to items that were already broken, chipped, or in poor condition before our clean. This includes fragile items, loose fixtures, worn surfaces, and anything not in reasonable working order prior to our arrival.</p>
+      <p>If you have items in your home that are particularly fragile or valuable, please let us know before your appointment so we can take extra care or avoid the area entirely.</p>
+    </div>
+    <div class="policy-callout">
+      <strong>Pre-existing damage:</strong> not our liability.<br>
+      <strong>Fragile or valuable items:</strong> let us know before your appointment.
+    </div>
+  </div>
+
+  <div class="policy-block">
+    <div class="policy-label">Subscription Cancellation</div>
+    <h2 class="policy-title">Cancel your subscription anytime, no fees</h2>
+    <div class="policy-body">
+      <p>You can cancel a recurring subscription at any time. To avoid being charged for the next visit, your cancellation must be received at least <strong>24 hours before your next scheduled appointment</strong>.</p>
+      <p>There are no cancellation fees, no minimum commitment periods, and no questions asked. To cancel, reply to any of your appointment confirmation texts or email us directly.</p>
+    </div>
+    <div class="policy-callout">
+      <strong>Cancel anytime</strong> — just let us know at least 24 hours before your next visit. No fees.
+    </div>
+  </div>
+
+  <div class="policy-block">
+    <div class="policy-label">Damage Claims</div>
+    <h2 class="policy-title">Report damage within 24 hours and we'll make it right</h2>
+    <div class="policy-body">
+      <p>If you believe something was damaged during your appointment, <strong>take photos immediately</strong> and submit a claim within 24 hours by emailing <a href="mailto:pullmanhomecleaning@gmail.com" style="color:var(--accent);">pullmanhomecleaning@gmail.com</a> with photos and a written description of the damage. Photo documentation is required — we cannot process claims without it.</p>
+      <p>All claims are reviewed on their merits. Submitting a claim does not guarantee compensation. We will assess whether the damage occurred during our clean and respond within 3 business days. We carry <strong>general liability insurance</strong>, and verified claims will be handled appropriately — but we reserve the right to dispute claims that lack evidence or appear inconsistent with the service performed.</p>
+      <p>We are not responsible for pre-existing damage, items that were already in poor condition, fragile or improperly stored items, or damage to valuables left unsecured in cleaning areas.</p>
+    </div>
+    <div class="policy-callout">
+      <strong>Required:</strong> photos submitted within 24 hours of your appointment.<br>
+      <strong>Review timeline:</strong> we respond within 3 business days.<br>
+      <strong>Coverage:</strong> we carry general liability insurance — verified claims only.
+    </div>
+  </di

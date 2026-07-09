@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pullman Home Cleaning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F9F7F4;
+    --ink: #1A1A1A;
+    --ink-muted: #5C6370;
+    --ink-faint: #9B9FA6;
+    --green: #0B6E72;
+    --green-light: #E0F4F5;
+    --accent: #085559;
+    --white: #FFFFFF;
+    --border: #E5E2DE;
+  }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 58px;
+  }
+  .nav-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-brand img {
+    width: 32px; height: 32px; border-radius: 7px; object-fit: contain;
+    box-shadow: 0 0 0 1.5px rgba(0,0,0,0.08);
+  }
+  .nav-cta {
+    background: var(--ink);
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 13px 32px;
+    border-radius: 100px;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: #333; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 92% 10%, rgba(11,110,114,0.38) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 45% at 8% 90%,  rgba(11,110,114,0.24) 0%, transparent 60%),
+      var(--cream);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(26,26,26,0.11) 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    padding: 80px 5vw 72px;
+    max-width: 1040px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 56px;
+    align-items: center;
+  }
+  @media (max-width: 760px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 0; }
+    .hero-right { display: none; }
+  }
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .hero-float-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px 24px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+  .hero-float-stars { color: #F5A623; font-size: 14px; letter-spacing: 1px; margin-bottom: 8px; }
+  .hero-float-quote { font-size: 14px; color: var(--ink); line-height: 1.6; margin-bottom: 10px; }
+  .hero-float-author { font-size: 12px; color: var(--ink-faint); }
+  .hero-float-trust {
+    background: var(--green-light);
+    border-color: rgba(11,110,114,0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+  .hero-float-trust-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .hero-float-check {
+    width: 18px; height: 18px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--green-light);
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(38px, 6vw, 66px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 22px;
+    max-width: 680px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--green);
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--ink-muted);
+    max-width: 500px;
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn-primary {
+    background: var(--ink);
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 18px 48px;
+    border-radius: 100px;
+    transition: background .2s, transform .15s;
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .btn-primary:hover { background: #333; transform: translateY(-1px); }
+  .btn-ghost {
+    color: var(--ink-muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 13px 4px;
+    border-bottom: 1px solid var(--ink-faint);
+    transition: color .2s, border-color .2s;
+  }
+  .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* TRUST SECTION */
+  .trust-section {
+    background: #F0F0ED;
+    border-top: 1px solid #E0DDD8;
+    border-bottom: 1px solid #E0DDD8;
+    padding: 56px 5vw;
+  }
+  .trust-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 36px;
+  }
+  .trust-feature {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .trust-ico {
+    width: 44px; height: 44px;
+    background: var(--green-light);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .trust-feature strong {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .trust-feature span {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* PRICING */
+  .section {
+    padding: 72px 5vw;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .section-sub {
+    font-size: 16px;
+    color: var(--ink-muted);
+    margin-bottom: 40px;
+    max-width: 480px;
+  }
+
+  .pricing-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+    margin-bottom: 28px;
+  }
+  .pricing-group-label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--green);
+    margin-bottom: 20px;
+  }
+  .pricing-group-tag {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    white-space: nowrap;
+  }
+  .pricing-group-line { flex: 1; height: 1px; background: transparent; }
+  .pricing-group-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 14px;
+  }
+  .price-card {
+    background: var(--white);
+    border: 1.5px solid #B8B3AB;
+    border-radius: 16px;
+    padding: 22px 20px;
+    position: relative;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+  }
+  .price-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.13); }
+  a.price-card { text-decoration: none; color: inherit; cursor: pointer; }
+  a.sub-card { text-decoration: none; color: inherit; cursor: pointer; }
+  .price-card.featured {
+    border-color: var(--green);
+    border-width: 2px;
+  }
+  .featured-badge {
+    position: absolute; top: -11px; left: 20px;
+    background: var(--green);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 12px;
+    border-radius: 100px;
+    letter-spacing: .04em;
+  }
+  .card-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+  .card-desc {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .card-price {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .card-price span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-muted);
+  }
+  .card-sub-price {
+    font-size: 12px;
+    color: #22863A;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .card-divider { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+  .card-feature {
+    display: flex; align-items: flex-start; gap: 7px;
+    font-size: 12px; color: var(--ink-muted);
+    margin-bottom: 5px; line-height: 1.4;
+  }
+  .check { color: var(--accent); font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+
+  .sub-note {
+    background: var(--green-light);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 13px;
+    color: var(--green);
+    font-weight: 500;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sub-icon { font-size: 18px; }
+
+  /* SUB BENEFITS + PLANS */
+  .sub-intro { margin-bottom: 40px; max-width: 560px; }
+  .sub-benefits {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  @media (max-width: 680px) { .sub-benefits { grid-template-columns: 1fr; } }
+  .sub-benefit {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sub-benefit-icon {
+    width: 36px; height: 36px;
+    background: rgba(7,197,207,0.15);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 4px;
+  }
+  .sub-benefit strong { font-size: 14px; font-weight: 600; color: #fff; }
+  .sub-benefit span { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.55; }
+  /* BOOKING */
+  .booking-section {
+    background: var(--ink);
+    padding: 80px 5vw;
+  }
+  .booking-section .section-label { color: rgba(255,255,255,0.38); }
+  .booking-section .section-title { color: #fff; }
+  .booking-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  @media (max-width: 680px) {
+    .booking-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero h1 { font-size: 36px; }
+  }
+  .booking-steps { margin-top: 32px; display: flex; flex-direction: column; gap: 0; }
+  .step { display: flex; gap: 18px; position: relative; padding-bottom: 28px; }
+  .step:last-child { padding-bottom: 0; }
+  .step-left { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .step-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--green);
+    color: #fff;
+    font-size: 14px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    position: relative; z-index: 1;
+  }
+  .step-line {
+    width: 2px;
+    flex: 1;
+    background: rgba(255,255,255,0.1);
+    margin-top: 6px;
+  }
+  .step:last-child .step-line { display: none; }
+  .step-text { padding-top: 7px; line-height: 1.5; }
+  .step-text strong { font-size: 15px; color: rgba(255,255,255,0.88); font-weight: 500; display: block; margin-bottom: 3px; }
+  .step-text span { font-size: 13px; color: rgba(255,255,255,0.42); }
+
+  /* BOOKING CARD */
+  .booking-card {
+    background: #141414;
+    border: 1px solid rgba(255,255,255,0.09);
+    border-top: 3px solid #07C5CF;
+    border-radius: 24px;
+    padding: 44px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .booking-card-headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(26px, 3.5vw, 34px);
+    color: #fff;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .booking-card-headline em {
+    font-style: italic;
+    color: #07C5CF;
+  }
+  .btn-book-card {
+    display: block;
+    text-align: center;
+    background: #069BA4;
+    color: #fff;
+    text-decoration: none;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 18px 24px;
+    border-radius: 12px;
+    transition: background .2s, transform .15s;
+    letter-spacing: .01em;
+  }
+  .btn-book-card:hover { background: #05878F; transform: translateY(-1px); }
+  .booking-card-perks {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .booking-card-perk {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+  }
+  .booking-card-perk::before {
+    content: '✓';
+    color: #07C5CF;
+    font-weight: 700;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+
+  /* FOOTER */
+  footer {
+    padding: 32px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--border);
+    max-width: 100%;
+  }
+  .footer-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--ink);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .footer-note {
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  /* SUBSCRIBE & SAVE */
+  .sub-section {
+    background: var(--ink);
+    border-radius: 24px;
+    padding: 48px;
+    margin-top: 48px;
+    color: #fff;
+  }
+  .sub-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+    align-items: start;
+  }
+  @media (max-width: 680px) { .sub-header { grid-template-columns: 1fr; } .sub-section { padding: 32px 24px; } }
+  .sub-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(26px, 4vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 6px 0 12px;
+    color: #fff;
+  }
+  .sub-title em { color: var(--accent); font-style: italic; }
+  .sub-desc { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7; }
+  .sub-perks { display: flex; flex-direction: column; gap: 16px; justify-content: center; }
+  .sub-perk { display: flex; align-items: center; gap: 14px; }
+  .sub-perk-icon { font-size: 22px; flex-shrink: 0; width: 44px; height: 44px; background: rgba(255,255,255,0.07); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+  .sub-perk div { display: flex; flex-direction: column; gap: 1px; }
+  .sub-perk strong { font-size: 14px; font-weight: 600; color: #fff; }
+  .sub-perk span { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .sub-groups { display: flex; flex-direction: column; gap: 28px; margin-bottom: 32px; }
+  .sub-group-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .09em;
+    color: rgba(255,255,255,0.35);
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 14px;
+  }
+  .sub-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  @media (max-width: 480px) { .sub-cards { grid-template-columns: 1fr; } }
+  .sub-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+    transition: border-color .2s, background .2s;
+  }
+  .sub-card:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.2); }
+  .sub-card-featured {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .sub-card-featured:hover { background: #07C5CF; border-color: #07C5CF; }
+  .sub-card-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 3px 9px;
+    border-radius: 100px;
+    margin-bottom: 12px;
+  }
+  .sub-card-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .sub-card-featured .sub-card-label { color: rgba(255,255,255,0.7); }
+  .sub-card-name { font-family: 'DM Serif Display', serif; font-size: 18px; color: #fff; margin-bottom: 16px; line-height: 1.2; }
+  .sub-price-now { display: flex; align-items: baseline; gap: 2px; margin-bottom: 4px; }
+  .sub-price-amt { font-family: 'DM Serif Display', serif; font-size: 30px; color: #fff; }
+  .sub-price-freq { font-size: 13px; color: rgba(255,255,255,0.55); margin-left: 2px; }
+  .sub-price-was { font-size: 12px; color: rgba(255,255,255,0.38); text-decoration: line-through; margin-bottom: 12px; }
+  .sub-savings {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #07C5CF;
+    background: rgba(184,146,42,0.12);
+    border: 1px solid rgba(184,146,42,0.25);
+    border-radius: 100px;
+    padding: 3px 10px;
+  }
+  .sub-card-featured .sub-savings { color: #fff; background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.25); }
+  .sub-cta-row { display: flex; align-items: center; gap: 20px; flex-wrap: nowrap; }
+  .sub-cta-note { font-size: 13px; color: rgba(255,255,255,0.4); white-space: nowrap; }
+
+  /* REVIEWS */
+  .reviews-section {
+    border-top: 1px solid var(--border);
+  }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .review-card {
+    background: var(--white);
+    border: 1.5px solid #B8B3AB;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+  }
+  .review-stars {
+    color: #F5A623;
+    font-size: 15px;
+    letter-spacing: 2px;
+  }
+  .review-text {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.7;
+    flex: 1;
+  }
+  .review-author {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .review-author strong {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .review-author span {
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  /* FAQ */
+  .faq-section {
+    border-top: 1px solid var(--border);
+  }
+  .faq-list {
+    margin-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-q {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 0;
+    background: none;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    line-height: 1.4;
+  }
+  .faq-q::after {
+    content: '+';
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--ink-faint);
+    flex-shrink: 0;
+    transition: transform .2s;
+  }
+  .faq-q.open::after {
+    transform: rotate(45deg);
+  }
+  .faq-a {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 1.7;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease, padding .3s ease;
+  }
+  .faq-a.open {
+    max-height: 300px;
+    padding-bottom: 20px;
+  }
+
+  /* MOBILE FIXES — placed AFTER base rules so they win the cascade. */
+  @media (max-width: 760px) {
+    .hero-right { display: none; }
+  }
+  @media (max-width: 600px) {
+    /* Nav: keep logo + brand + CTA comfortably on one line at iPhone widths */
+    nav { padding: 0 14px; gap: 10px; }
+    .nav-brand { font-size: 15px; gap: 8px; white-space: nowrap; }
+    .nav-brand img { width: 26px; height: 26px; }
+    .nav-cta { padding: 10px 16px; font-size: 14px; white-space: nowrap; flex-shrink: 0; }
+    /* Footer: stack vertically so the company name never gets crushed to 3 lines */
+    footer { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .footer-brand { white-space: nowrap; }
+    /* Subscribe CTA row wraps instead of forcing a wide row */
+    .sub-cta-row { flex-wrap: wrap; gap: 14px; }
+    .sub-cta-note { white-space: normal; }
+    .pricing-group-tag { white-space: normal; line-height: 1.2; }
+  }
+  @media (max-width: 360px) {
+    /* Smallest iPhones (mini / SE): shrink brand a touch more so nothing overflows */
+    .nav-brand { font-size: 13px; gap: 6px; }
+    .nav-brand img { width: 24px; height: 24px; }
+    .nav-cta { padding: 9px 12px; font-size: 13px; }
+  }
+
+  /* FADE IN */
+  @keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform: translateY(0); } }
+  .hero-inner > * { animation: fadeUp .5s ease forwards; }
+  .hero-inner > *:nth-child(1) { animation-delay: .05s; }
+  .hero-inner > *:nth-child(2) { animation-delay: .12s; }
+  .hero-inner > *:nth-child(3) { animation-delay: .2s; }
+  .hero-inner > *:nth-child(4) { animation-delay: .28s; }
+  @media (prefers-reduced-motion: reduce) { .hero-inner > * { animation: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#"><img src="logo-header-demo2.svg" alt="logo">Pullman Home Cleaning</a>
+  <a class="nav-cta" href="booking.html">Book my clean</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Serving Pullman off-campus apartments &amp; homes</div>
+      <h1>A clean home.<br><em>Finally.</em></h1>
+      <p class="hero-sub">Professional home cleaning for Pullman residents and students. Book in minutes, we handle everything.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="booking.html">Book my clean</a>
+        <a class="btn-ghost" href="#pricing">See pricing ↓</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-float-card">
+        <div class="hero-float-stars">★★★★★</div>
+        <p class="hero-float-quote">"Booked the night before and they showed up exactly on time. My bathroom looks better than when I moved in."</p>
+        <div class="hero-float-author">Jordan M. · Quick Clean, 2-bed apartment</div>
+      </div>
+      <div class="hero-float-card">
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--green);margin-bottom:12px;">Book in under 2 minutes</div>
+        <div style="font-size:13px;color:var(--ink-muted);line-height:1.9;">No quotes.<br>Great gift idea for your student child.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust-section">
+  <div class="trust-inner">
+    <div class="trust-feature">
+      <div class="trust-ico">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+      </div>
+      <strong>All supplies included</strong>
+      <span>We bring everything — you don't buy a thing.</span>
+    </div>
+    <div class="trust-feature">
+      <div class="trust-ico">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+      </div>
+      <strong>Satisfaction guaranteed</strong>
+      <span>If something's not right, we come back and fix it — free.</span>
+    </div>
+    <div class="trust-feature">
+      <div class="trust-ico">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <strong>Instant confirmation</strong>
+      <span>Text confirmation sent right after you book.</span>
+    </div>
+    <div class="trust-feature">
+      <div class="trust-ico">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      </div>
+      <strong>Cancel anytime</strong>
+      <span>Cancel any clean or subscription with 24 hrs notice. No fees.</span>
+    </div>
+  </div>
+</section>
+
+<section class="reviews-section">
+  <div class="section">
+    <div class="section-label">Reviews</div>
+    <h2 class="section-title">What Pullman students say</h2>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Booked the night before and they showed up exactly on time. My bathroom looks better than when I moved in. Worth every penny."</p>
+        <div class="review-author">
+          <strong>Jordan M.</strong>
+          <span>Quick Clean, 2-bed apartment</span>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Set up a monthly subscription and honestly haven't thought about cleaning since. It just gets done. Super easy to book."</p>
+        <div class="review-author">
+          <strong>Alex K.</strong>
+          <span>Monthly subscriber, 1-bath apartment</span>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Super professional and easy booking"</p>
+        <div class="review-author">
+          <strong>David Green</strong>
+          <span>Google review</span>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★<span style="color:var(--border)">★</span></div>
+        <div class="review-author" style="border-top:none;padding-top:0;">
+          <strong>Sam D.</strong>
+          <span>Quick Clean, 2 bathrooms</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing" style="padding-top:44px;">
+  <div class="section-label">Pricing</div>
+  <h2 class="section-title">Simple, honest rates</h2>
+  <p class="section-sub">No quotes, every rate upfront. Subscribe to save $5 per visit.</p>
+
+  <div class="pricing-groups">
+
+    <!-- 1 Bathroom -->
+    <div class="pricing-group">
+      <div class="pricing-group-label">
+        <span class="pricing-group-tag">1 Bathroom Home / Apartment</span>
+        <div class="pricing-group-line"></div>
+      </div>
+      <div class="pricing-group-cards">
+        <a class="price-card" href="booking.html?svc=wh1">
+          <div class="card-name">Whole Home — Studio / 1 Bath</div>
+          <div class="card-desc">Kitchen, living area, bedroom &amp; bathroom.</div>
+          <div class="card-price">$90 <span>one-time</span></div>
+          <div class="card-sub-price">$85 / visit with subscription</div>
+          <hr class="card-divider">
+          <div class="card-feature"><span class="check">✓</span>Kitchen surfaces &amp; sink</div>
+          <div class="card-feature"><span class="check">✓</span>Living area dusted &amp; vacuumed</div>
+          <div class="card-feature"><span class="check">✓</span>Bathroom full clean</div>
+          <div class="card-feature"><span class="check">✓</span>All floors mopped</div>
+        </a>
+        <a class="price-card" href="booking.html?svc=dc1">
+          <div class="card-name">Deep Clean — Studio / 1 Bath</div>
+          <div class="card-desc">Full deep clean. Ideal for move-out &amp; deposit recovery.</div>
+          <div class="card-price">$160 <span>one-time</span></div>
+          <div class="card-sub-price">$155 / visit with subscription</div>
+          <hr class="card-divider">
+          <div class="card-feature"><span class="check">✓</span>Full bathroom deep clean</div>
+          <div class="card-feature"><span class="check">✓</span>Kitchen &amp; all surfaces</div>
+          <div class="card-feature"><span class="check">✓</span>Bedroom &amp; floors</div>
+          <div class="card-feature"><span class="check">✓</span>Baseboards &amp; details</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 2 Bathrooms -->
+    <div class="pricing-group">
+      <div class="pricing-group-label">
+        <span class="pricing-group-tag">2 Bathroom Home / Apartment</span>
+        <div class="pricing-group-line"></div>
+      </div>
+      <div class="pricing-group-cards">
+        <a class="price-card featured" href="booking.html?svc=qc2">
+          <div class="featured-badge">Most popular</div>
+          <div class="card-name">Quick Clean — Bathrooms Only</div>
+          <div class="card-desc">Both bathrooms scrubbed top to bottom. No kitchen or bedrooms.</div>
+          <div class="card-price">$85 <span>one-time</span></div>
+          <div class="card-sub-price">$80 / visit with subscription</div>
+          <hr class="card-divider">
+          <div class="card-feature"><span class="check">✓</span>Both bathrooms, full clean</div>
+          <div class="card-feature"><span class="check">✓</span>Toilet, sink, mirror</div>
+          <div class="card-feature"><span class="check">✓</span>Shower or tub</div>
+          <div class="card-feature"><span class="check">✓</span>Sweep &amp; mop floors</div>
+        </a>
+        <a class="price-card" href="booking.html?svc=wh2">
+          <div class="card-name">Whole Home — 2 Bathrooms</div>
+          <div class="card-desc">Larger apartments &amp; shared houses.</div>
+          <div class="card-price">$140 <span>one-time</span></div>
+          <div class="card-sub-price">$135 / visit with subscription</div>
+          <hr class="card-divider">
+          <div class="card-feature"><span class="check">✓</span>Kitchen surfaces &amp; sink</div>
+          <div class="card-feature"><span class="check">✓</span>Both bathrooms full clean</div>
+          <div class="card-feature"><span class="check">✓</span>All bedrooms &amp; common areas</div>
+          <div class="card-feature"><span class="check">✓</span>All floors mopped</div>
+        </a>
+        <a class="price-card" href="booking.html?svc=dc2">
+          <div class="card-name">Deep Clean — 2-Bath Home</div>
+          <div class="card-desc">Full deep clean. Ideal for move-out &amp; deposit recovery.</div>
+          <div class="card-price">$225 <span>one-time</span></div>
+          <div class="card-sub-price">$220 / visit with subscription</div>
+          <hr class="card-divider">
+          <div class="card-feature"><span class="check">✓</span>Both bathrooms deep cleaned</div>
+          <div class="card-feature"><span class="check">✓</span>Kitchen &amp; all surfaces</div>
+          <div class="card-feature"><span class="check">✓</span>All bedrooms &amp; floors</div>
+          <div class="card-feature"><span class="check">✓</span>Baseboards &amp; details</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- 3 Bathrooms -->
+    <div class="pricing-group">
+      <div class="pricing-group-label">
+        <span class="pricing-group-tag">3 Bathroom Home / Apartment</span>
+        <div class="pricing-group-line"></div>
+      </div>
+      <div class="pricing-group-cards">
+        <a class="price-card" href="booking.html?svc=wh3">
+          <div class="card-name">Whole Home — 3 Bathrooms</div>
+          <div class="card-desc">Larger homes with 3 bedrooms and 3 bathrooms.</div>
+          <div class="card-price">$190 <span>one-time</span></div>
+          <div class="card-sub-price">$185 / visit with subscription</div>
+          <hr class="card-divider">
+          <div class="card-feature"><span class="check">✓</span>Kitchen surfaces &amp; sink</div>
+          <div class="card-feature"><span class="check">✓</span>All 3 bathrooms full clean</div>
+          <div class="card-feature"><span class="check">✓</span>All bedrooms &amp; common areas</div>
+          <div class="card-feature"><span class="check">✓</span>All floors mopped</div>
+        </a>
+        <a class="price-card" href="booking.html?svc=dc3">
+          <div class="card-name">Deep Clean — 3-Bath Home</div>
+          <div class="card-desc">Full deep clean for larger 3-bathroom homes.</div>
+          <div class="card-price">$290 <span>one-time</span></div>
+          <div class="card-sub-price">$285 / visit with subscription</div>
+          <hr class="card-divider">
+          <div class="card-feature"><span class="check">✓</span>All 3 bathrooms deep cleaned</div>
+          <div class="card-feature"><span class="check">✓</span>Kitchen &amp; all surfaces</div>
+          <div class="card-feature"><span class="check">✓</span>All bedrooms &amp; floors</div>
+          <div class="card-feature"><span class="check">✓</span>Baseboards &amp; details</div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <p style="text-align:center;font-size:14px;color:var(--ink-faint);margin-top:8px;">Have a 4+ bathroom home? <a href="mailto:pullmanhomecleaning@gmail.com" style="color:var(--ink-faint);text-decoration:underline;">Contact us</a> for a custom quote.</p>
+  <p style="text-align:center;font-size:14px;color:var(--ink-faint);margin-top:6px;">🐾 Homes with pets include a <strong>+$10 pet fee</strong> per visit — selected at checkout.</p>
+
+  <div class="sub-note">
+    <span class="sub-icon">↻</span>
+    Subscribe monthly and save $5 per clean — cancel anytime with 24 hours notice, no fees.
+  </div>
+
+  <div class="sub-section">
+    <div class="sub-intro">
+      <div class="section-label">Subscribe &amp; save</div>
+      <h3 class="sub-title">Stop thinking about it.<br><em>It just gets done.</em></h3>
+      <p class="sub-desc">Subscribe and your home gets cleaned every month — automatically billed, no back-and-forth. Schedule each clean whenever works for you. You never have to think about it again.</p>
+    </div>
+
+    <div class="sub-benefits">
+      <div class="sub-benefit">
+        <div class="sub-benefit-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#07C5CF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <strong>Your home cleans itself</strong>
+        <span>Book once and we show up every month automatically. Schedule each visit whenever works for you.</span>
+      </div>
+      <div class="sub-benefit">
+        <div class="sub-benefit-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#07C5CF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <strong>You pay less</strong>
+        <span>Save $5 every visit compared to booking one-time. It adds up fast.</span>
+      </div>
+      <div class="sub-benefit">
+        <div class="sub-benefit-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#07C5CF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <strong>Zero risk</strong>
+        <span>Cancel anytime with 24 hours notice. No fees, no contracts, no drama.</span>
+      </div>
+    </div>
+
+    <div class="sub-cta-row">
+      <a class="btn-primary" href="booking.html" style="background:#07C5CF;">Start a subscription</a>
+      <span class="sub-cta-note">Select "Monthly" or "Bi-weekly" on the booking page</span>
+    </div>
+  </div>
+</section>
+
+<section class="section faq-section" id="faq">
+  <div class="section-label">FAQ</div>
+  <h2 class="section-title">Common questions</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">What's included in every clean?</button>
+      <div class="faq-a">All supplies are included — you don't need to provide anything. Every clean includes before/after photos sent to you when we're done.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">How do I cancel a booking?</button>
+      <div class="faq-a">Cancel anytime with at least 24 hours notice via the cancellation link in your confirmation email, or email pullmanhomecleaning@gmail.com. No cancellation fees.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Are you insured?</button>
+      <div class="faq-a">Our business insurance is being finalized right now. Every cleaner is personally vetted before their first job — and if anything is ever not right, we make it right.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">How does the subscription work?</button>
+      <div class="faq-a">Pick your service, select "Monthly" on the booking page, and you'll be charged automatically each month on the same date. Save $5 per visit vs. one-time pricing. Cancel anytime with 24 hours notice — no fees.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">Do I need to be home?</button>
+      <div class="faq-a">You need to be home at the start to let us in, but you're free to leave after that. We'll send you a message when the clean is complete.</div>
+    </div>
+  </div>
+</section>
+
+<section class="booking-section" id="book">
+  <div class="booking-inner">
+    <div class="booking-left">
+      <div class="section-label">Book a clean</div>
+      <h2 class="section-title">Book in under<br><em style="font-style:italic;color:#07C5CF">2 minutes.</em></h2>
+      <p style="font-size:14px;color:rgba(255,255,255,0.48);margin-bottom:28px;line-height:1.7">Pick your service, lock in a time, and pay — all in one place. No calls, no emails back and forth.</p>
+      <div class="booking-steps">
+        <div class="step">
+          <div class="step-left"><div class="step-num">1</div><div class="step-line"></div></div>
+          <div class="step-text"><strong>Pick your service</strong><span>Choose one-time or monthly, and select the right clean for your place.</span></div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+          <div class="step-text"><strong>Pick a date and time</strong><span>Same-day booking available. Choose whatever slot works.</span></div>
+        </div>
+        <div class="step">
+          <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+          <div class="step-text"><strong>Pay and confirm</strong><span>Secure checkout via Stripe. Text confirmation sent immediately.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="booking-right">
+      <div class="booking-card">
+        <div class="booking-card-headline">A clean home is <em>a couple clicks away.</em></div>
+        <a class="btn-book-card" href="booking.html">Book my clean →</a>
+        <div class="booking-card-perks">
+          <div class="booking-card-perk">All supplies included — bring nothing</div>
+          <div class="booking-card-perk">Cancel free with 24 hours notice</div>
+          <div class="booking-card-perk">Satisfaction guaranteed</div>
+          <div class="booking-card-perk">Before &amp; after photos every clean</div>
+          <div class="booking-card-perk">Text confirmation sent immediately</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">
+    <img src="logo-header-demo2.svg" alt="logo" style="width:28px;height:28px;border-radius:6px;object-fit:contain;box-shadow:0 0 0 1.5px rgba(0,0,0,0.08);">
+    Pullman Home Cleaning
+  </div>
+  <div class="footer-note">&copy; 2026 Pullman Home Cleaning &nbsp;·&nbsp; <a href="policies.html" style="color:var(--ink-faint)">Policies</a> &nbsp;·&nbsp; <a href="terms.html" style="color:var(--ink-faint)">Terms &amp; Privacy</a></div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM — Pullman Home Cleaning</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#111111;--bg2:#1a1a1a;--bg3:#222222;--bg4:#2a2a2a;
+  --teal:#0B6E72;--teal-dim:rgba(11,110,114,0.12);--teal-border:rgba(11,110,114,0.40);
+  --green:#22863A;--green-dim:rgba(34,134,58,0.13);
+  --amber:#c97a00;--amber-dim:rgba(201,122,0,0.15);--amber-border:rgba(201,122,0,0.4);
+  --red:#c0392b;--red-dim:rgba(192,57,43,0.15);
+  --text:rgba(255,255,255,0.90);--text-mid:rgba(255,255,255,0.58);--text-low:rgba(255,255,255,0.32);
+  --border:rgba(255,255,255,0.08);--border-h:rgba(255,255,255,0.16);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
+
+/* ── Auth screen ── */
+#auth{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
+.auth-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:40px 32px;width:100%;max-width:360px;text-align:center;}
+.auth-card h1{font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:6px;}
+.auth-card p{font-size:14px;color:var(--text-mid);margin-bottom:28px;}
+.auth-card input{width:100%;background:var(--bg3);border:1.5px solid var(--border);border-radius:9px;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);outline:none;margin-bottom:14px;}
+.auth-card input:focus{border-color:var(--teal-border);}
+.auth-card button{width:100%;background:var(--teal);color:#fff;border:none;border-radius:9px;padding:13px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;}
+.auth-card button:hover{opacity:.9;}
+.auth-err{color:#e05555;font-size:13px;margin-top:10px;}
+
+/* ── App ── */
+#app{display:none;}
+.hdr{background:var(--bg);border-bottom:0.5px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:12px;}
+.hdr-name{font-family:'DM Serif Display',serif;font-size:18px;}
+.hdr-badge{font-size:11px;background:var(--teal-dim);border:1px solid var(--teal-border);color:rgba(150,230,230,0.85);padding:3px 10px;border-radius:20px;font-weight:600;letter-spacing:.05em;}
+.hdr-right{display:flex;align-items:center;gap:10px;}
+.btn-sm{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;border:1px solid var(--border);background:var(--bg3);color:var(--text-mid);}
+.btn-sm:hover{border-color:var(--border-h);color:var(--text);}
+
+.main{max-width:1100px;margin:0 auto;padding:28px 20px 80px;}
+
+/* ── Stats row ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:28px;}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+.stat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-low);margin-bottom:6px;}
+.stat-val{font-family:'DM Serif Display',serif;font-size:28px;color:#fff;}
+.stat-sub{font-size:12px;color:var(--text-low);margin-top:3px;}
+
+/* ── Filters / toolbar ── */
+.toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:18px;}
+.toolbar input{flex:1;min-width:200px;background:var(--bg2);border:1.5px solid var(--border);border-radius:9px;padding:9px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;}
+.toolbar input:focus{border-color:var(--teal-border);}
+.toolbar select{background:var(--bg2);border:1.5px solid var(--border);border-radius:9px;padding:9px 14px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text-mid);outline:none;cursor:pointer;}
+.toolbar select:focus{border-color:var(--teal-border);}
+
+/* ── Table ── */
+.tbl-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+table{width:100%;border-collapse:collapse;}
+thead th{padding:12px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-low);text-align:left;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap;}
+thead th:hover{color:var(--text-mid);}
+thead th .sort-arrow{margin-left:4px;opacity:0.4;}
+thead th.sorted .sort-arrow{opacity:1;color:var(--teal);}
+tbody tr{border-bottom:0.5px solid var(--border);transition:background .1s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:var(--bg3);}
+td{padding:13px 16px;font-size:14px;vertical-align:top;}
+.td-name{font-weight:600;color:#fff;margin-bottom:2px;}
+.td-email{font-size:12px;color:var(--text-low);}
+.td-phone{font-size:12px;color:var(--text-low);}
+
+/* ── Tags / badges ── */
+.tag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;margin:2px 2px 0 0;white-space:nowrap;}
+.tag-repeat{background:var(--teal-dim);color:rgba(100,220,220,.9);border:1px solid var(--teal-border);}
+.tag-sub{background:var(--green-dim);color:rgba(100,210,130,.9);border:1px solid rgba(34,134,58,.35);}
+.tag-churn{background:var(--red-dim);color:rgba(255,140,130,.9);border:1px solid rgba(192,57,43,.4);}
+.tag-new{background:var(--amber-dim);color:rgba(255,200,90,.9);border:1px solid var(--amber-border);}
+
+.no-results{text-align:center;padding:60px 20px;color:var(--text-low);font-size:15px;}
+
+/* ── Detail modal ── */
+#modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:100;align-items:center;justify-content:center;padding:20px;}
+#modal-bg.open{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;padding:28px;}
+.modal-close{float:right;background:none;border:none;color:var(--text-low);cursor:pointer;font-size:22px;line-height:1;margin-left:8px;}
+.modal h2{font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:4px;}
+.modal .m-email{font-size:14px;color:var(--text-mid);margin-bottom:20px;}
+.m-section{margin-bottom:20px;}
+.m-section h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-low);margin-bottom:10px;}
+.m-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--border);}
+.m-row:last-child{border-bottom:none;}
+.m-key{font-size:13px;color:var(--text-mid);}
+.m-val{font-size:13px;color:var(--text);text-align:right;}
+.m-notes{font-size:13px;color:var(--text-mid);line-height:1.6;padding:10px 14px;background:var(--bg3);border-radius:8px;white-space:pre-wrap;}
+
+/* ── Referral chart ── */
+.ref-chart{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:28px;}
+.ref-chart h2{font-family:'DM Serif Display',serif;font-size:18px;margin-bottom:18px;}
+.ref-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.ref-label{font-size:13px;color:var(--text-mid);width:180px;flex-shrink:0;}
+.ref-bar-wrap{flex:1;height:14px;background:var(--bg3);border-radius:7px;overflow:hidden;}
+.ref-bar{height:100%;background:var(--teal);border-radius:7px;transition:width .5s ease;}
+.ref-count{font-size:13px;color:var(--text-low);width:30px;text-align:right;flex-shrink:0;}
+
+.spinner{width:24px;height:24px;border:2.5px solid rgba(255,255,255,0.1);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite;margin:40px auto;display:block;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.load-msg{text-align:center;color:var(--text-low);font-size:14px;padding-top:12px;}
+</style>
+</head>
+<body>
+
+<!-- ── Auth screen ── -->
+<div id="auth">
+  <div class="auth-card">
+    <h1>CRM</h1>
+    <p>Pullman Home Cleaning — Admin only</p>
+    <input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button onclick="doLogin()">Sign in</button>
+    <div class="auth-err" id="auth-err"></div>
+  </div>
+</div>
+
+<!-- ── Main app ── -->
+<div id="app">
+  <div class="hdr">
+    <div class="hdr-left">
+      <div class="hdr-name">Customer CRM</div>
+      <div class="hdr-badge" id="hdr-badge">0 customers</div>
+    </div>
+    <div class="hdr-right">
+      <button class="btn-sm" onclick="loadData()">↻ Refresh</button>
+      <button class="btn-sm" onclick="exportCSV()">↓ Export CSV</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- Stats -->
+    <div class="stats" id="stats-row">
+      <div class="stat"><div class="stat-label">Total Customers</div><div class="stat-val" id="s-total">—</div></div>
+      <div class="stat"><div class="stat-label">Repeat Customers</div><div class="stat-val" id="s-repeat">—</div><div class="stat-sub" id="s-repeat-pct"></div></div>
+      <div class="stat"><div class="stat-label">Active Subscriptions</div><div class="stat-val" id="s-subs">—</div></div>
+      <div class="stat"><div class="stat-label">Lifetime Revenue</div><div class="stat-val" id="s-rev">—</div></div>
+      <div class="stat"><div class="stat-label">Churn Risk</div><div class="stat-val" id="s-churn">—</div><div class="stat-sub">subs gone quiet 45+ days</div></div>
+    </div>
+
+    <!-- Referral source chart -->
+    <div class="ref-chart">
+      <h2>Where customers come from</h2>
+      <div id="ref-chart-body"><div class="load-msg">Loading…</div></div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <input type="text" id="search" placeholder="Search name, email, address…" oninput="renderTable()">
+      <select id="filter-tag" onchange="renderTable()">
+        <option value="">All customers</option>
+        <option value="repeat">Repeat only</option>
+        <option value="sub">Active subscription</option>
+        <option value="churn">Churn risk</option>
+        <option value="new">New (1 booking)</option>
+      </select>
+      <select id="sort-col" onchange="renderTable()">
+        <option value="lastBookedAt">Sort: Last booked</option>
+        <option value="bookingCount">Sort: Most bookings</option>
+        <option value="totalRevenue">Sort: Most revenue</option>
+        <option value="name">Sort: Name</option>
+      </select>
+    </div>
+
+    <!-- Table -->
+    <div class="tbl-wrap">
+      <div id="tbl-loading" style="padding:60px 20px;text-align:center;">
+        <div class="spinner"></div>
+        <div class="load-msg">Loading customer data…</div>
+      </div>
+      <table id="customer-table" style="display:none;">
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Status</th>
+            <th data-col="bookingCount">Bookings <span class="sort-arrow">↕</span></th>
+            <th data-col="totalRevenue">Revenue <span class="sort-arrow">↕</span></th>
+            <th data-col="lastBookedAt">Last Booked <span class="sort-arrow">↕</span></th>
+            <th>Source</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody id="tbl-body"></tbody>
+      </table>
+      <div class="no-results" id="no-results" style="display:none;">No customers match your filter.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Customer detail modal ── -->
+<div id="modal-bg" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal-inner"></div>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────────────── */
+/*  State                                                           */
+/* ─────────────────────────────────────────────────────────────── */
+let allCustomers = [];
+let sessionPw = '';
+
+const REFERRAL_LABELS = {
+  'google':           'Google Search',
+  'door-hanger':      'Door Hanger / Flyer',
+  'friend-referral':  'Friend / Roommate Referral',
+  'instagram':        'Instagram',
+  'nextdoor':         'Nextdoor',
+  'wsu-group':        'WSU Group / Facebook',
+  'property-manager': 'Property Manager',
+  'returning':        'Returning Customer',
+  'other':            'Other',
+  'unknown':          'Unknown',
+};
+
+/* ─────────────────────────────────────────────────────────────── */
+/*  Auth                                                            */
+/* ─────────────────────────────────────────────────────────────── */
+async function doLogin() {
+  const pw = document.getElementById('pw-input').value.trim();
+  if (!pw) return;
+  document.getElementById('auth-err').textContent = '';
+  try {
+    const resp = await fetch('/.netlify/functions/get-customers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    });
+    if (resp.status === 401) {
+      document.getElementById('auth-err').textContent = 'Incorrect password.';
+      return;
+    }
+    if (!resp.ok) throw new Error('Server error');
+    const data = await resp.json();
+    sessionPw = pw;
+    allCustomers = tagCustomers(data.customers || []);
+    document.getElementById('auth').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    renderStats();
+    renderChart();
+    renderTable();
+    document.getElementById('tbl-loading').style.display = 'none';
+    document.getElementById('customer-table').style.display = 'table';
+  } catch(e) {
+    document.getElementById('auth-err').textContent = 'Error connecting. Try again.';
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/*  Refresh                                                         */
+/* ─────────────────────────────────────────────────────────────── */
+async function loadData() {
+  document.getElementById('tbl-loading').style.display = 'block';
+  document.getElementById('customer-table').style.display = 'none';
+  try {
+    const resp = await fetch('/.netlify/functions/get-customers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: sessionPw })
+    });
+    const data = await resp.json();
+    allCustomers = tagCustomers(data.customers || []);
+    renderStats();
+    renderChart();
+    renderTable();
+  } finally {
+    document.getElementById('tbl-loading').style.display = 'none';
+    document.getElementById('customer-table').style.display = 'table';
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/*  Tag customers (compute churn risk etc.)                         */
+/* ─────────────────────────────────────────────────────────────── */
+function tagCustomers(list) {
+  const now = Date.now();
+  return list.map(c => {
+    const tags = Array.isArray(c.tags) ? [...c.tags] : [];
+    const lastMs = c.lastBookedAt ? new Date(c.lastBookedAt).getTime() : 0;
+    const daysSince = (now - lastMs) / 86400000;
+
+    // Churn risk: has/had a subscription and hasn't booked in 45+ days
+    if ((c.subscriptionActive || (c.subscriptionIds && c.subscriptionIds.length > 0)) && daysSince > 45) {
+      if (!tags.includes('churn')) tags.push('churn');
+    }
+    // New customer
+    if (c.bookingCount === 1 && !tags.includes('repeat') && !tags.includes('new')) {
+      tags.push('new');
+    }
+    return { ...c, _tags: tags, _daysSince: daysSince };
+  });
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/*  Stats row                                                        */
+/* ─────────────────────────────────────────────────────────────── */
+function renderStats() {
+  const total   = allCustomers.length;
+  const repeat  = allCustomers.filter(c => c.bookingCount > 1).length;
+  const subs    = allCustomers.filter(c => c.subscriptionActive).length;
+  const rev     = allCustomers.reduce((a,c) => a + (Number(c.totalRevenue)||0), 0);
+  const churn   = allCustomers.filter(c => c._tags.includes('churn')).length;
+
+  document.getElementById('s-total').textContent  = total;
+  document.getElementById('s-repeat').textContent = repeat;
+  document.getElementById('s-repeat-pct').textContent = total ? Math.round(repeat/total*100)+'% of customers' : '';
+  document.getElementById('s-subs').textContent   = subs;
+  document.getElementById('s-rev').textContent    = '$' + rev.toLocaleString('en-US', {maximumFractionDigits:0});
+  document.getElementById('s-churn').textContent  = churn;
+  document.getElementById('hdr-badge').textContent = total + ' customer' + (total!==1?'s':'');
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/*  Referral chart                                                  */
+/* ─────────────────────────────────────────────────────────────── */
+function renderChart() {
+  const counts = {};
+  allCustomers.forEach(c => {
+    const src = c.referralSource || 'unknown';
+    counts[src] = (counts[src] || 0) + 1;
+  });
+  const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+  const max = sorted[0]?.[1] || 1;
+  const body = document.getElementById('ref-chart-body');
+  if (!sorted.length) { body.innerHTML = '<div class="load-msg">No data yet.</div>'; return; }
+  body.innerHTML = sorted.map(([src, count]) => `
+    <div class="ref-row">
+      <div class="ref-label">${REFERRAL_LABELS[src] || src}</div>
+      <div class="ref-bar-wrap"><div class="ref-bar" style="width:${Math.round(count/max*100)}%"></div></div>
+      <div class="ref-count">${count}</div>
+    </div>
+  `).join('');
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/*  Table                                                           */
+/* ─────────────────────────────────────────────────────────────── */
+function renderTable() {
+  const search    = document.getElementById('search').value.toLowerCase();
+  const filterTag = document.getElementById('filter-tag').value;
+  const sortCol   = document.getElementById('sort-col').value;
+
+  let list = [...allCustomers];
+
+  // Filter by search
+  if (search) {
+    list = list.filter(c =>
+      (c.name    || '').toLowerCase().includes(search) ||
+      (c.email   || '').toLowerCase().includes(search) ||
+      (c.address || '').toLowerCase().includes(search) ||
+      (c.phone   || '').toLowerCase().includes(search)
+    );
+  }
+
+  // Filter by tag
+  if (filterTag === 'repeat')  list = list.filter(c => c.bookingCount > 1);
+  if (filterTag === 'sub')     list = list.filter(c => c.subscriptionActive);
+  if (filterTag === 'churn')   list = list.filter(c => c._tags.includes('churn'));
+  if (filterTag === 'new')     list = list.filter(c => c.bookingCount === 1);
+
+  // Sort
+  list.sort((a,b) => {
+    if (sortCol === 'lastBookedAt') return (new Date(b.lastBookedAt||0)) - (new Date(a.lastBookedAt||0));
+    if (sortCol === 'bookingCount') return (b.bookingCount||0) - (a.bookingCount||0);
+    if (sortCol === 'totalRevenue') return (b.totalRevenue||0) - (a.totalRevenue||0);
+    if (sortCol === 'name')         return (a.name||'').localeCompare(b.name||'');
+    return 0;
+  });
+
+  const tbody = document.getElementById('tbl-body');
+  if (!list.length) {
+    tbody.innerHTML = '';
+    document.getElementById('no-results').style.display = 'block';
+    return;
+  }
+  document.getElementById('no-results').style.display = 'none';
+
+  tbody.innerHTML = list.map(c => {
+    const lastBooked = c.lastBookedAt
+      ? new Date(c.lastBookedAt).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'})
+      : '—';
+    const daysAgo = c.lastBookedAt
+      ? Math.round((Date.now() - new Date(c.lastBookedAt).getTime()) / 86400000)
+      : null;
+    const daysStr = daysAgo === null ? '' : daysAgo === 0 ? 'Today' : daysAgo === 1 ? '1 day ago' : daysAgo + ' days ago';
+
+    const tags = c._tags.map(t => {
+      if (t === 'repeat') return '<span class="tag tag-repeat">Repeat</span>';
+      if (t === 'churn')  return '<span class="tag tag-churn">⚠ Churn Risk</span>';
+      if (t === 'new')    return '<span class="tag tag-new">New</span>';
+      return '';
+    }).join('');
+    const subTag = c.subscriptionActive ? '<span class="tag tag-sub">● Sub Active</span>' : '';
+
+    const notesPreview = (c.notes || '').substring(0, 60) + (c.notes && c.notes.length > 60 ? '…' : '');
+    const src = REFERRAL_LABELS[c.referralSource] || c.referralSource || '—';
+
+    return `<tr onclick="openModal('${escAttr(c.email)}')" style="cursor:pointer;">
+      <td>
+        <div class="td-name">${esc(c.name)}</div>
+        <div class="td-email">${esc(c.email)}</div>
+        <div class="td-phone">${esc(c.phone||'')}</div>
+      </td>
+      <td>${tags}${subTag}</td>
+      <td style="font-weight:600;">${c.bookingCount||0}</td>
+      <td style="color:rgba(100,210,130,.9);font-weight:600;">$${(Number(c.totalRevenue)||0).toFixed(0)}</td>
+      <td>
+        <div style="white-space:nowrap;">${lastBooked}</div>
+        <div style="font-size:12px;color:var(--text-low);">${daysStr}</div>
+      </td>
+      <td style="font-size:12px;color:var(--text-mid);">${esc(src)}</td>
+      <td style="font-size:12px;color:var(--text-low);max-width:160px;">${esc(notesPreview)}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/*  Customer detail modal                                           */
+/* ─────────────────────────────────────────────────────────────── */
+function openModal(email) {
+  const c = allCustomers.find(x => x.email === email);
+  if (!c) return;
+
+  const fmt = iso => iso ? new Date(iso).toLocaleDateString('en-US',{weekday:'short',month:'long',day:'numeric',year:'numeric'}) : '—';
+  const src = REFERRAL_LABELS[c.referralSource] || c.referralSource || 'Unknown';
+  const bookingIds = Array.isArray(c.bookingIds) ? c.bookingIds.join('\n') : '—';
+
+  document.getElementById('modal-inner').innerHTML = `
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>${esc(c.name)}</h2>
+    <div class="m-email">${esc(c.email)}</div>
+
+    <div class="m-section">
+      <h3>Contact</h3>
+      <div class="m-row"><span class="m-key">Phone</span><span class="m-val">${esc(c.phone||'—')}</span></div>
+      <div class="m-row"><span class="m-key">Last address</span><span class="m-val">${esc(c.address||'—')}</span></div>
+    </div>
+
+    <div class="m-section">
+      <h3>Booking history</h3>
+      <div class="m-row"><span class="m-key">Total bookings</span><span class="m-val" style="font-weight:700;">${c.bookingCount||0}</span></div>
+      <div class="m-row"><span class="m-key">Lifetime revenue</span><span class="m-val" style="color:rgba(100,210,130,.9);font-weight:700;">$${(Number(c.totalRevenue)||0).toFixed(2)}</span></div>
+      <div class="m-row"><span class="m-key">First booked</span><span class="m-val">${fmt(c.firstBookedAt)}</span></div>
+      <div class="m-row"><span class="m-key">Last booked</span><span class="m-val">${fmt(c.lastBookedAt)}</span></div>
+      <div class="m-row"><span class="m-key">Frequency</span><span class="m-val">${esc(c.frequency||'—')}</span></div>
+      <div class="m-row"><span class="m-key">Subscription active</span><span class="m-val">${c.subscriptionActive?'Yes':'No'}</span></div>
+      <div class="m-row"><span class="m-key">Last service</span><span class="m-val">${esc(c.service||'—')}</span></div>
+    </div>
+
+    <div class="m-section">
+      <h3>Referral & tags</h3>
+      <div class="m-row"><span class="m-key">How they found us</span><span class="m-val">${esc(src)}</span></div>
+      <div class="m-row"><span class="m-key">Tags</span><span class="m-val">${(c._tags||[]).join(', ')||'—'}</span></div>
+    </div>
+
+    <div class="m-section">
+      <h3>Consents</h3>
+      <div class="m-row"><span class="m-key">Photo permission</span><span class="m-val" style="color:${c.photoConsent?'rgba(100,210,130,.9)':'var(--text-low)'}">${c.photoConsent?'✓ Granted':'✗ Not granted'}</span></div>
+      <div class="m-row"><span class="m-key">Terms agreed</span><span class="m-val">${c.termsAgreedAt ? fmt(c.termsAgreedAt) : '—'}</span></div>
+      ${c.autoRenewalAgreedAt ? `<div class="m-row"><span class="m-key">Auto-renewal agreed</span><span class="m-val">${fmt(c.autoRenewalAgreedAt)}</span></div>` : ''}
+      <div class="m-row"><span class="m-key">Pets in home</span><span class="m-val" style="color:${c.hasPets?'rgba(255,180,60,.9)':'var(--text-low)'}">${c.hasPets?'🐾 Yes (+$10 fee)':'No'}</span></div>
+    </div>
+
+    ${c.notes ? `
+    <div class="m-section">
+      <h3>Cleaner notes / preferences</h3>
+      <div class="m-notes">${esc(c.notes)}</div>
+    </div>` : ''}
+
+    ${c.subscriptionIds && c.subscriptionIds.length ? `
+    <div class="m-section">
+      <h3>Stripe subscription ID(s)</h3>
+      <div class="m-notes" style="font-size:11px;word-break:break-all;">${c.subscriptionIds.join('\n')}</div>
+    </div>` : ''}
+
+    <div class="m-section" style="padding-top:4px;display:flex;gap:10px;">
+      <button onclick="openCancelDialog('${escAttr(c.email)}','${escAttr(c.name)}')" style="flex:1;padding:11px;border-radius:9px;border:1.5px solid rgba(192,57,43,0.45);background:rgba(192,57,43,0.12);color:rgba(255,140,130,.9);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .15s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+        ✕ Cancel Booking
+      </button>
+      <button onclick="openChargeFeeDialog('${escAttr(c.email)}','${escAttr(c.name)}','${c.subscriptionIds && c.subscriptionIds.length ? c.subscriptionIds[0] : ''}')" style="flex:1;padding:11px;border-radius:9px;border:1.5px solid var(--amber-border);background:var(--amber-dim);color:var(--amber);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:opacity .15s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+        ⚠ Charge Fee
+      </button>
+    </div>
+  `;
+  document.getElementById('modal-bg').classList.add('open');
+}
+function closeModal() { document.getElementById('modal-bg').classList.remove('open'); }
+
+/* ─────────────────────────────────────────────────────────────── */
+/*  CSV export                                                       */
+/* ─────────────────────────────────────────────────────────────── */
+function exportCSV() {
+  const cols = ['name','email','phone','address','bookingCount','totalRevenue','firstBookedAt','lastBookedAt','referralSource','frequency','subscriptionActive','photoConsent','termsAgreedAt','autoRenewalAgreedAt','hasPets','notes'];
+  const header = cols.join(',');
+  const rows = allCustomers.map(c =>
+    cols.map(k => {
+      let v = c[k] ?? '';
+      if (v instanceof Object) v = JSON.stringify(v);
+      return '"' + String(v).replace(/"/g,'""') + '"';
+    }).join(',')
+  );
+  const csv = [header, ...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'pshc-customers-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/*  Utilities                                                        */
+/* ─────────────────────────────────────────────────────────────── */
+const esc     = s => String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const escAttr = s => String(s??'').replace(/'/g,"&#39;").replace(/"/g,'&quot;');
+
+/* ─────────────────────────────────────────────────────────────── */
+/*  Charge Fee dialog                                               */
+/* ─────────────────────────────────────────────────────────────── */
+let _feeEmail = '';
+let _feeName  = '';
+let _feeSubId = '';
+let _feeType  = 'lockout';
+
+function openChargeFeeDialog(email, name, subId) {
+  _feeEmail = email;
+  _feeName  = name;
+  _feeSubId = subId || '';
+  _feeType  = 'lockout';
+  document.getElementById('fd-email-display').textContent = name + ' (' + email + ')';
+  document.getElementById('fd-booking-price').value = '';
+  document.getElementById('fd-booking-date').value  = '';
+  document.getElementById('fd-service').value       = '';
+  document.getElementById('fd-result').textContent  = '';
+  document.getElementById('fd-result').style.color  = '';
+  const btn = document.getElementById('fd-submit-btn');
+  btn.disabled    = false;
+  btn.textContent = 'Charge Fee';
+  selectFeeType('lockout');
+  document.getElementById('fee-dialog-bg').classList.add('open');
+}
+
+function selectFeeType(type) {
+  _feeType = type;
+  const selStyle = { background:'var(--amber-dim)', borderColor:'var(--amber-border)', color:'var(--amber)' };
+  const defStyle = { background:'var(--bg3)',        borderColor:'var(--border)',        color:'var(--text-mid)' };
+  Object.assign(document.getElementById('fd-btn-lockout').style,    type === 'lockout'     ? selStyle : defStyle);
+  Object.assign(document.getElementById('fd-btn-latecancel').style, type === 'late_cancel' ? selStyle : defStyle);
+  updateFeeAmount();
+}
+
+function updateFeeAmount() {
+  const price = parseFloat(document.getElementById('fd-booking-price').value) || 0;
+  const rate  = _feeType === 'lockout' ? 0.50 : 0.25;
+  const fee   = (price * rate).toFixed(2);
+  document.getElementById('fd-fee-display').textContent = price > 0 ? 'Fee to charge: $' + fee : 'Enter booking price above';
+}
+
+async function submitFeeCharge() {
+  const price = parseFloat(document.getElementById('fd-booking-price').value);
+  if (!price || price <= 0) { alert('Enter the original booking price first.'); return; }
+
+  const btn = document.getElementById('fd-submit-btn');
+  btn.disabled    = true;
+  btn.textContent = 'Charging…';
+  document.getElementById('fd-result').textContent = '';
+
+  try {
+    const body = {
+      password:     sessionPw,
+      email:        _feeEmail,
+      feeType:      _feeType,
+      bookingPrice: price,
+    };
+    const date = document.getElementById('fd-booking-date').value;
+    const svc  = document.getElementById('fd-service').value;
+    if (date) body.bookingDate    = date;
+    if (svc)  body.service        = svc;
+    if (_feeSubId) body.subscriptionId = _feeSubId;
+
+    const resp = await fetch('/.netlify/functions/charge-fee', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(body)
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Server error');
+
+    const msg = data.chargeMethod === 'direct'
+      ? '✓ Charged $' + data.feeAmount.toFixed(2) + ' directly to card.'
+      : '✓ Invoice for $' + data.feeAmount.toFixed(2) + ' sent — due in 7 days.';
+
+    const resultEl = document.getElementById('fd-result');
+    resultEl.textContent = msg;
+    resultEl.style.color = 'rgba(100,210,130,.9)';
+    btn.textContent = 'Done';
+  } catch(err) {
+    const resultEl = document.getElementById('fd-result');
+    resultEl.textContent = '✗ ' + err.message;
+    resultEl.style.color = '#e05555';
+    btn.disabled    = false;
+    btn.textContent = 'Charge Fee';
+  }
+}
+
+function closeChargeFeeDialog() {
+  document.getElementById('fee-dialog-bg').classList.remove('open');
+}
+
+/* ─────────────────────────────────────────────────────────────── */
+/*  Cancel Booking dialog                                           */
+/* ─────────────────────────────────────────────────────────────── */
+let _cancelEmail = '';
+let _cancelName  = '';
+
+async function openCancelDialog(email, name) {
+  _cancelEmail = email;
+  _cancelName  = name;
+  document.getElementById('cd-email-display').textContent = name + ' (' + email + ')';
+  document.getElementById('cd-bookings-list').innerHTML = '<div style="color:var(--text-low);font-size:13px;padding:12px 0;">Loading bookings…</div>';
+  document.getElementById('cd-result').textContent = '';
+  document.getElementById('cd-result').style.color = '';
+  document.getElementById('cancel-dialog-bg').classList.add('open');
+
+  try {
+    const resp = await fetch('/.netlify/functions/get-bookings', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ password: sessionPw, email })
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Failed to load bookings');
+    renderCancelBookingList(data.bookings || []);
+  } catch(err) {
+    document.getElementById('cd-bookings-list').innerHTML =
+      '<div style="color:#e05555;font-size:13px;">' + esc(err.message) + '</div>';
+  }
+}
+
+function renderCancelBookingList(bookings) {
+  const list = document.getElementById('cd-bookings-list');
+  if (!bookings.length) {
+    list.innerHTML = '<div style="color:var(--text-low);font-size:13px;padding:12px 0;">No bookings found for this customer.</div>';
+    return;
+  }
+
+  const now = Date.now();
+  list.innerHTML = bookings.map(b => {
+    const apptMs   = b.date ? new Date(b.date).getTime() : 0;
+    const isPast   = apptMs < now;
+    const hoursOut = (apptMs - now) / 36e5;
+    const within24 = !isPast && hoursOut < 24;
+    const tag      = isPast
+      ? '<span style="font-size:11px;color:var(--text-low);">Past</span>'
+      : within24
+        ? '<span style="font-size:11px;color:rgba(255,140,130,.9);font-weight:700;">Within 24h — fee applies</span>'
+        : '<span style="font-size:11px;color:rgba(100,210,130,.85);">Upcoming</span>';
+
+    const payType = b.paidViaSubscription
+      ? '<span style="font-size:11px;color:var(--text-low);">Subscription token</span>'
+      : b.paid
+        ? '<span style="font-size:11px;color:var(--text-low);">Paid $' + (Number(b.price)||0).toFixed(0) + '</span>'
+        : '<span style="font-size:11px;color:var(--text-low);">Unpaid</span>';
+
+    return `<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--border);">
+      <div>
+        <div style="font-size:13px;font-weight:600;">${esc(b.date||'?')} ${esc(b.time||'')} — ${esc(b.service||'Cleaning')}</div>
+        <div style="margin-top:3px;display:flex;gap:10px;">${payType} ${tag}</div>
+      </div>
+      <div style="display:flex;gap:6px;flex-shrink:0;">
+        ${!isPast && !b.completed ? '' : b.completed ? '<span style="font-size:11px;color:rgba(100,210,130,.85);font-weight:600;padding:7px 0;">✓ Done</span>' : `<button onclick="confirmMarkComplete('${b.id}')" style="padding:7px 12px;border-radius:7px;border:1px solid rgba(72,199,142,0.45);background:rgba(72,199,142,0.12);color:rgba(100,210,130,.9);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;">✓ Complete</button>`}
+        <button onclick="confirmCancelBooking('${b.id}')" style="padding:7px 14px;border-radius:7px;border:1px solid rgba(192,57,43,0.45);background:rgba(192,57,43,0.12);color:rgba(255,140,130,.9);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;">
+          Cancel
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function confirmMarkComplete(bookingId) {
+  const resultEl = document.getElementById('cd-result');
+  resultEl.textContent = 'Marking complete…';
+  resultEl.style.color = 'var(--text-mid)';
+  document.querySelectorAll('#cd-bookings-list button').forEach(b => b.disabled = true);
+
+  try {
+    const resp = await fetch('/.netlify/functions/mark-complete', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ adminPassword: sessionPw, bookingId })
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Failed to mark complete');
+
+    resultEl.textContent = '✓ Marked complete.' + (data.reviewSent ? ' Review request emailed.' : '');
+    resultEl.style.color = 'rgba(100,210,130,.9)';
+
+    // Refresh booking list
+    const resp2 = await fetch('/.netlify/functions/get-bookings', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ password: sessionPw, email: _cancelEmail })
+    });
+    const data2 = await resp2.json();
+    renderCancelBookingList(data2.bookings || []);
+
+  } catch(err) {
+    resultEl.textContent = 'Error: ' + err.message;
+    resultEl.style.color = 'rgba(255,140,130,.9)';
+    document.querySelectorAll('#cd-bookings-list button').forEach(b => b.disabled = false);
+  }
+}
+
+async function confirmCancelBooking(bookingId) {
+  const resultEl = document.getElementById('cd-result');
+  resultEl.textContent = 'Cancelling…';
+  resultEl.style.color = 'var(--text-mid)';
+
+  // Disable all cancel buttons while processing
+  document.querySelectorAll('#cd-bookings-list button').forEach(b => b.disabled = true);
+
+  try {
+    const resp = await fetch('/.netlify/functions/cancel-booking', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ adminPassword: sessionPw, bookingId })
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Cancel failed');
+
+    let msg = '\u2713 Booking cancelled.';
+    if (data.refundType === 'full')    msg += ' Full refund issued.';
+    if (data.refundType === 'partial') msg += ' 75% refunded (25% kept as late cancel fee).';
+    if (data.lateFeeCharged && data.paidViaSubscription) msg += ' Late cancel fee charged to card.';
+
+    resultEl.textContent = msg;
+    resultEl.style.color = 'rgba(100,210,130,.9)';
+
+    // Refresh the list
+    const resp2 = await fetch('/.netlify/functions/get-bookings', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ password: sessionPw, email: _cancelEmail })
+    });
+    const data2 = await resp2.json();
+    renderCancelBookingList(data2.bookings || []);
+
+  } catch(err) {
+    resultEl.textContent = '\u2717 ' + err.message;
+    resultEl.style.color = '#e05555';
+    document.querySelectorAll('#cd-bookings-list button').forEach(b => b.disabled = false);
+  }
+}
+
+function closeCancelDialog() {
+  document.getElementById('cancel-dialog-bg').classList.remove('open');
+}
+</script>
+
+<!-- Fee charge dialog -->
+<div id="fee-dialog-bg" onclick="if(event.target===this)closeChargeFeeDialog()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:200;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px 24px;width:100%;max-width:420px;position:relative;max-height:90vh;overflow-y:auto;">
+    <button onclick="closeChargeFeeDialog()" style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text-mid);font-size:22px;cursor:pointer;line-height:1;">&times;</button>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px;">Charge Fee</h2>
+    <div id="fd-email-display" style="font-size:13px;color:var(--text-mid);margin-bottom:20px;"></div>
+    <div style="margin-bottom:14px;">
+      <div style="font-size:11px;color:var(--text-low);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;">Fee type</div>
+      <div style="display:flex;gap:10px;">
+        <button id="fd-btn-lockout" onclick="selectFeeType('lockout')" style="flex:1;padding:10px;border-radius:8px;border:1.5px solid;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;transition:all .15s;">&#x1F512; Lockout (50%)</button>
+        <button id="fd-btn-latecancel" onclick="selectFeeType('late_cancel')" style="flex:1;padding:10px;border-radius:8px;border:1.5px solid;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;transition:all .15s;">&#x23F0; Late Cancel (25%)</button>
+      </div>
+    </div>
+    <div style="margin-bottom:14px;">
+      <div style="font-size:11px;color:var(--text-low);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;">Original booking price ($)</div>
+      <input id="fd-booking-price" type="number" min="0" step="0.01" placeholder="e.g. 120.00" oninput="updateFeeAmount()" style="width:100%;background:var(--bg3);border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;">
+    </div>
+    <div id="fd-fee-display" style="font-size:15px;font-weight:700;color:var(--amber);text-align:center;margin-bottom:14px;">Enter booking price above</div>
+    <div style="margin-bottom:14px;">
+      <div style="font-size:11px;color:var(--text-low);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;">Booking date (optional)</div>
+      <input id="fd-booking-date" type="date" style="width:100%;background:var(--bg3);border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;color-scheme:dark;">
+    </div>
+    <div style="margin-bottom:20px;">
+      <div style="font-size:11px;color:var(--text-low);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;">Service type (optional)</div>
+      <input id="fd-service" type="text" placeholder="e.g. Deep Clean" style="width:100%;background:var(--bg3);border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;">
+    </div>
+    <button id="fd-submit-btn" onclick="submitFeeCharge()" style="width:100%;padding:12px;border-radius:9px;border:none;background:var(--amber);color:#000;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:opacity .15s;">
+      Charge Fee
+    </button>
+    <div id="fd-result" style="margin-top:12px;font-size:13px;text-align:center;font-weight:600;min-height:20px;"></div>
+  </div>
+</div>
+
+<style>#fee-dialog-bg.open{display:flex;}</style>
+
+<!-- Cancel Booking dialog -->
+<div id="cancel-dialog-bg" onclick="if(event.target===this)closeCancelDialog()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:200;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px 24px;width:100%;max-width:480px;position:relative;max-height:90vh;overflow-y:auto;">
+    <button onclick="closeCancelDialog()" style="position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text-mid);font-size:22px;cursor:pointer;line-height:1;">&times;</button>
+    <h2 style="font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:4px;">Cancel Booking</h2>
+    <div id="cd-email-display" style="font-size:13px;color:var(--text-mid);margin-bottom:16px;"></div>
+    <div style="font-size:12px;color:var(--text-low);margin-bottom:14px;">Cancellations within 24 hours of the appointment automatically apply the late cancel fee. Subscription tokens are freed, not refunded.</div>
+    <div id="cd-bookings-list"></div>
+    <div id="cd-result" style="margin-top:12px;font-size:13px;font-weight:600;min-height:20px;"></div>
+  </div>
+</div>
+
+<style>#cancel-dialog-bg.open{display:flex;}</style>
+
+</body>
+</html>

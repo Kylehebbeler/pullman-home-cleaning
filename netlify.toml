@@ -1,0 +1,40 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[functions."send-reminders"]
+  schedule = "0 16 * * *"
+
+[functions."check-subscription-health"]
+  schedule = "0 10 * * *"
+
+# Runs at 9 AM PDT (16 UTC) every morning.
+# Sends Google review request to customers whose appointment was yesterday.
+[functions."send-review-request"]
+  schedule = "0 16 * * *"
+
+# Runs at noon UTC (5 AM PDT) daily.
+# Sends re-booking follow-up email to one-time customers 21 days after their clean.
+[functions."send-rebooking-nudge"]
+  schedule = "0 12 * * *"
+
+# Permanent short link for printed materials (door hangers, flyers).
+# NEVER remove this — printed QR codes point here. Repoint "to" if the booking page moves.
+[[redirects]]
+  from = "/book"
+  to = "/booking"
+  status = 301
+
+# Old booking page URLs redirect to /booking (query params preserved)
+[[redirects]]
+  from = "/booking-calendar-final"
+  to = "/booking"
+  status = 301
+
+[[redirects]]
+  from = "/booking-calendar-final.html"
+  to = "/booking"
+  status = 301

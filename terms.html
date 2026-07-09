@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service & Privacy Policy — Pullman Home Cleaning</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F9F7F4;
+    --ink: #1A1A1A;
+    --ink-muted: #5A5A5A;
+    --ink-faint: #AAAAAA;
+    --green: #0B6E72;
+    --green-light: #E0F4F5;
+    --accent: #0B6E72;
+    --white: #FFFFFF;
+    --border: rgba(26,26,26,0.1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 58px;
+  }
+  .nav-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-brand img {
+    width: 32px; height: 32px; border-radius: 7px; object-fit: contain;
+    box-shadow: 0 0 0 1.5px rgba(0,0,0,0.08);
+  }
+  .nav-cta {
+    background: var(--green);
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 13px 32px;
+    border-radius: 100px;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: var(--accent); }
+
+  /* PAGE HEADER */
+  .page-header {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 60% 80% at 95% 0%, rgba(155,27,48,0.15) 0%, transparent 60%),
+      var(--cream);
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(26,26,26,0.09) 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .page-header-inner {
+    position: relative;
+    z-index: 1;
+    padding: 56px 5vw 48px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .page-eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--green-light);
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+  .page-header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .page-header-sub {
+    font-size: 16px;
+    color: var(--ink-muted);
+    max-width: 520px;
+    line-height: 1.6;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 56px 5vw 80px;
+  }
+
+  /* TOC */
+  .toc {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 48px;
+  }
+  .toc-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 12px;
+  }
+  .toc a {
+    display: block;
+    font-size: 14px;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .toc a:last-child { border-bottom: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* SECTIONS */
+  .doc-section {
+    margin-bottom: 52px;
+  }
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+  .doc-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(22px, 3vw, 30px);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .doc-section h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+  .doc-section p {
+    font-size: 15px;
+    color: var(--ink-muted);
+    line-height: 1.75;
+    margin-bottom: 14px;
+    max-width: 680px;
+  }
+  .doc-section ul {
+    margin: 8px 0 14px 20px;
+  }
+  .doc-section li {
+    font-size: 15px;
+    color: var(--ink-muted);
+    line-height: 1.75;
+    margin-bottom: 6px;
+  }
+  .callout {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .callout strong { color: var(--accent); font-weight: 500; }
+
+  /* DIVIDER */
+  .section-divider {
+    border: none;
+    border-top: 2px solid var(--border);
+    margin: 52px 0;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--ink);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .footer-note { font-size: 12px; color: var(--ink-faint); }
+
+  @media (max-width: 680px) {
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+
+  @keyframes fadeUp { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
+  .page-header-inner > * { animation: fadeUp .45s ease forwards; }
+  .page-header-inner > *:nth-child(1) { animation-delay: .05s; }
+  .page-header-inner > *:nth-child(2) { animation-delay: .12s; }
+  .page-header-inner > *:nth-child(3) { animation-delay: .2s; }
+  @media (prefers-reduced-motion: reduce) { .page-header-inner > * { animation: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/"><img src="logo-header-demo2.svg" alt="logo">Pullman Home Cleaning</a>
+  <a class="nav-cta" href="booking.html">Book a clean</a>
+</nav>
+
+<header class="page-header">
+  <div class="page-header-inner">
+    <div class="page-eyebrow">Legal</div>
+    <h1>Terms of Service &amp; Privacy Policy</h1>
+    <p class="page-header-sub">Last updated: June 2026. These terms govern your use of our services and explain how we handle your personal information.</p>
+  </div>
+</header>
+
+<main class="content">
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">On this page</div>
+    <a href="#terms">Part 1 — Terms of Service</a>
+    <a href="#services-scope">1. What We Do</a>
+    <a href="#booking">2. Booking &amp; Payment</a>
+    <a href="#subscriptions">3. Subscriptions &amp; Auto-Renewal</a>
+    <a href="#cancellation">4. Cancellations &amp; Rescheduling</a>
+    <a href="#liability">5. Liability &amp; Property Damage</a>
+    <a href="#your-responsibilities">6. Your Responsibilities</a>
+    <a href="#termination">7. Termination</a>
+    <a href="#privacy">Part 2 — Privacy Policy</a>
+    <a href="#data-collected">8. Information We Collect</a>
+    <a href="#data-use">9. How We Use Your Information</a>
+    <a href="#data-sharing">10. Who We Share It With</a>
+    <a href="#data-retention">11. Data Retention</a>
+    <a href="#data-breach">12. Data Breach Notification</a>
+    <a href="#your-rights">13. Your Rights</a>
+    <a href="#contact">14. Contact Us</a>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PART 1: TERMS OF SERVICE                   -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <div class="doc-section" id="terms">
+    <div class="section-eyebrow">Part 1</div>
+    <h2>Terms of Service</h2>
+    <p>These Terms of Service ("Terms") form a binding agreement between you ("Customer") and KH Ventures LLC, doing business as Pullman Home Cleaning ("Company," "we," "us"). By booking a cleaning service or checking the agreement box at checkout, you confirm that you have read, understood, and agreed to these Terms.</p>
+  </div>
+
+  <div class="doc-section" id="services-scope">
+    <h3>1. What We Do</h3>
+    <p>We provide residential cleaning services for homes, apartments, and rental units in Pullman, WA and surrounding areas. Services are performed by our employed cleaning staff. We do not subcontract cleaning work to third parties.</p>
+    <p>The scope of each service tier (Quick Clean, Whole Home, Deep Clean) is described on our pricing page. We reserve the right to decline service for properties that are excessively soiled beyond what was booked, or that present unsafe conditions for our staff.</p>
+  </div>
+
+  <div class="doc-section" id="booking">
+    <h3>2. Booking &amp; Payment</h3>
+    <p>All bookings are completed online through our booking system. Payment is collected at the time of booking via Stripe. We accept major credit and debit cards. All prices are in USD and include applicable taxes.</p>
+    <p>You must provide a valid email address and phone number at booking. We use these to send confirmation, reminders, and service updates. Providing false contact information may result in cancellation of your booking without refund.</p>
+    <div class="callout">
+      <strong>Price displayed at checkout is final.</strong> If you believe you were charged incorrectly, contact us at <a href="mailto:pullmanhomecleaning@gmail.com" style="color:var(--accent)">pullmanhomecleaning@gmail.com</a> within 7 days of the charge.
+    </div>
+  </div>
+
+  <div class="doc-section" id="subscriptions">
+    <h3>3. Subscriptions &amp; Auto-Renewal</h3>
+    <p>Subscription plans (bi-weekly or monthly) are recurring services. By purchasing a subscription, you authorize the Company to charge your payment method automatically at the selected frequency until you cancel.</p>
+    <ul>
+      <li><strong>Bi-weekly:</strong> Your card is charged every 14 days starting from your first appointment date.</li>
+      <li><strong>Monthly:</strong> Your card is charged on the same calendar date each month starting from your first appointment date.</li>
+    </ul>
+    <p>You will receive a reminder email before each recurring charge. Subscription pricing is the discounted rate shown at checkout; one-time pricing applies if you cancel and re-book outside a subscription.</p>
+    <div class="callout">
+      <strong>To cancel a subscription:</strong> Email us at <a href="mailto:pullmanhomecleaning@gmail.com" style="color:var(--accent)">pullmanhomecleaning@gmail.com</a> or use the cancellation link in any booking confirmation email at least <strong>24 hours before</strong> your next scheduled appointment. Cancellations received less than 24 hours before the next appointment will be charged for that appointment.
+    </div>
+    <p>We reserve the right to modify subscription pricing with 30 days advance notice to your email address on file.</p>
+  </div>
+
+  <div class="doc-section" id="cancellation">
+    <h3>4. Cancellations &amp; Rescheduling</h3>
+    <ul>
+      <li><strong>Cancellations with 24+ hours notice:</strong> Full refund, no charge.</li>
+      <li><strong>Cancellations with less than 24 hours notice:</strong> A fee of 25% of the service price will apply. We cannot guarantee our cleaner can be reassigned on short notice.</li>
+      <li><strong>No-shows (cleaner cannot access the property):</strong> A fee of 50% of the service price applies. If our cleaner is unable to enter the property at the scheduled time, we will attempt to contact you. If we cannot reach you within 15 minutes, the appointment is marked as a no-show.</li>
+      <li><strong>Rescheduling:</strong> Rescheduling with 24+ hours notice is free and unlimited. Contact us by email or use the link in your confirmation email.</li>
+    </ul>
+  </div>
+
+  <div class="doc-section" id="liability">
+    <h3>5. Liability &amp; Property Damage</h3>
+    <p>We carry general liability insurance. If our staff damages your property during a cleaning, please report it to us within 24 hours of the appointment by emailing <a href="mailto:pullmanhomecleaning@gmail.com" style="color:var(--accent)">pullmanhomecleaning@gmail.com</a> with photos and a description. Reporting promptly helps us verify the cause — all claims are evaluated on their merits.</p>
+    <div class="callout">
+      <strong>Liability cap:</strong> Our total liability for any property damage claim is limited to the amount recoverable under our general liability insurance policy. We are not liable for pre-existing damage, items damaged due to their inherent fragility or improper storage, or damage to items not disclosed to us before the cleaning.
+    </div>
+    <p>We strongly recommend securing irreplaceable items, valuables, jewelry, loose cash, and fragile collectibles before your appointment. We are not responsible for items lost or damaged when they were left unsecured in cleaning areas.</p>
+    <p>To the fullest extent permitted by Washington law, we are not liable for indirect, incidental, consequential, or punitive damages arising from our services.</p>
+  </div>
+
+  <div class="doc-section" id="your-responsibilities">
+    <h3>6. Your Responsibilities</h3>
+    <ul>
+      <li>Provide accurate contact information and a correct service address at booking.</li>
+      <li>Ensure our staff can access the property at the scheduled time (key, code, or in-person access).</li>
+      <li>Secure pets in a separate room or outside during the cleaning.</li>
+      <li>Disclose any known hazards, biohazard conditions, or unusually soiled areas before booking so we can assess whether the standard service tier is appropriate.</li>
+      <li>Not request our staff to perform tasks outside the booked service scope (e.g., lifting furniture, exterior cleaning, handling biohazard materials) without prior agreement.</li>
+    </ul>
+  </div>
+
+  <div class="doc-section" id="termination">
+    <h3>7. Termination</h3>
+    <p>We reserve the right to refuse or discontinue service to any customer for any lawful reason, including but not limited to: unsafe working conditions, abusive conduct toward our staff, repeated no-shows, or disputed chargebacks. We will provide written notice by email and refund any unused prepaid service amounts.</p>
+    <p>These Terms are governed by the laws of the State of Washington. Any disputes arising under these Terms shall be resolved in Whitman County, Washington.</p>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- PART 2: PRIVACY POLICY                     -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <div class="doc-section" id="privacy">
+    <div class="section-eyebrow">Part 2</div>
+    <h2>Privacy Policy</h2>
+    <p>This Privacy Policy explains what personal information KH Ventures LLC (dba Pullman Home Cleaning) collects when you use our website or book a service, how we use it, who we share it with, and how you can control it.</p>
+  </div>
+
+  <div class="doc-section" id="data-collected">
+    <h3>8. Information We Collect</h3>
+    <p>We collect the following information when you use our booking system or contact us:</p>
+    <ul>
+      <li><strong>Contact information:</strong> Your name, email address, and phone number.</li>
+      <li><strong>Service address:</strong> The property address where cleaning is to be performed.</li>
+      <li><strong>Booking details:</strong> Service type, appointment date and time, and frequency preference.</li>
+      <li><strong>Payment information:</strong> We do not store your card number. Payment is processed by Stripe, which collects and securely stores your payment details on our behalf.</li>
+      <li><strong>Communications:</strong> Any messages you send us by email or through the booking system.</li>
+    </ul>
+    <p>We do not knowingly collect information from individuals under 18 years of age. Our services are intended for adults.</p>
+  </div>
+
+  <div class="doc-section" id="data-use">
+    <h3>9. How We Use Your Information</h3>
+    <ul>
+      <li>To confirm, schedule, and remind you about your cleaning appointments.</li>
+      <li>To process payment and manage subscriptions.</li>
+      <li>To respond to your questions or service requests.</li>
+      <li>To send you service-related communications (receipts, reminders, cancellation notices).</li>
+      <li>To improve our scheduling, routing, and service quality.</li>
+    </ul>
+    <p>We do not sell your personal information. We do not use your information for targeted advertising. We do not send unsolicited marketing emails without your consent.</p>
+  </div>
+
+  <div class="doc-section" id="data-sharing">
+    <h3>10. Who We Share It With</h3>
+    <p>We share your information only with the service providers necessary to operate our business:</p>
+    <ul>
+      <li><strong>Stripe:</strong> Processes your payment. Subject to <a href="https://stripe.com/privacy" target="_blank" rel="noopener" style="color:var(--accent)">Stripe's Privacy Policy</a>.</li>
+      <li><strong>EmailJS:</strong> Delivers booking confirmation and reminder emails. Subject to <a href="https://www.emailjs.com/legal/privacy-policy/" target="_blank" rel="noopener" style="color:var(--accent)">EmailJS's Privacy Policy</a>.</li>
+      <li><strong>Firebase / Google:</strong> Stores booking records securely. Subject to <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener" style="color:var(--accent)">Google's Privacy Policy</a>.</li>
+    </ul>
+    <p>We may also disclose your information if required to do so by law, court order, or a valid government request.</p>
+  </div>
+
+  <div class="doc-section" id="data-retention">
+    <h3>11. Data Retention</h3>
+    <p>We retain your booking and contact information for as long as your account is active or as needed to provide services, comply with legal obligations, resolve disputes, and enforce our agreements. Booking records are retained for a minimum of three years for accounting and tax purposes under Washington state law.</p>
+    <p>Payment records are retained by Stripe according to their data retention policies.</p>
+  </div>
+
+  <div class="doc-section" id="data-breach">
+    <h3>12. Data Breach Notification</h3>
+    <p>In the event of a security breach involving your personal information, we will notify you as required by Washington's data breach notification law (RCW 19.255.010). Notification will be made in the most expedient time possible and no later than 45 days after we discover the breach, using the email address you provided at booking.</p>
+    <p>We will describe the nature of the breach, the categories of personal information involved, the steps we have taken to contain it, and the steps you can take to protect yourself. If the breach affects more than 500 Washington residents, we will also notify the Washington Attorney General's Office.</p>
+  </div>
+
+  <div class="doc-section" id="your-rights">
+    <h3>13. Your Rights</h3>
+    <p>You may contact us at any time to:</p>
+    <ul>
+      <li>Request a copy of the personal information we hold about you.</li>
+      <li>Request correction of inaccurate information.</li>
+      <li>Request deletion of your information, subject to any legal retention requirements.</li>
+      <li>Opt out of any non-essential communications.</li>
+    </ul>
+    <p>To exercise any of these rights, email us at <a href="mailto:pullmanhomecleaning@gmail.com" style="color:var(--accent)">pullmanhomecleaning@gmail.com</a>. We will respond within 30 days.</p>
+  </div>
+
+  <div class="doc-section" id="contact">
+    <h3>14. Contact Us</h3>
+    <p>If you have questions about these Terms or this Privacy Policy, contact us at:</p>
+    <div class="callout">
+      <strong>KH Ventures LLC, dba Pullman Home Cleaning</strong><br>
+      Email: <a href="mailto:pullmanhomecleaning@gmail.com" style="color:var(--accent)">pullmanhomecleaning@gmail.com</a><br>
+      Pullman, WA 99163
+    </div>
+    <p style="margin-top:20px; font-size:13px; color:var(--ink-faint);">These Terms and Privacy Policy were last updated June 2026. We may update these documents from time to time. The current version is always available at this URL. Continued use of our services after an update constitutes acceptance of the revised terms.</p>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-brand"><img src="logo-header-demo2.svg" alt="logo" style="width:28px;height:28px;border-radius:6px;object-fit:contain;">Pullman Home Cleaning</div>
+  <div class="footer-note">&copy; 2026 Pullman Home Cleaning &nbsp;·&nbsp; <a href="terms.html" style="color:var(--ink-faint)">Terms &amp; Privacy</a></div>
+</footer>
+
+</body>
+</html>

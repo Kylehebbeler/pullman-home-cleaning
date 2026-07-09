@@ -1,0 +1,104 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ──────────────────────────────────────────────────────────────
+    // slots/{slotId}
+    //   Public availability data — date, time, serviceId, schedMinutes only.
+    //   NO customer PII in this collection.
+    //   - Anyone can read (needed for availability calendar)
+    //   - Booking calendar can create (written inside booking transaction)
+    //   - No updates or deletes from the client
+    // ──────────────────────────────────────────────────────────────
+    match /slots/{slotId} {
+      allow read: if true;
+      allow create: if request.resource.data.keys().hasOnly(['date','time','serviceId','schedMinutes'])
+                    && request.resource.data.date is string
+                    && request.resource.data.time is string
+                    && request.resource.data.serviceId is string;
+      allow update, delete: if false;
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // bookings/{bookingId}
+    //   Full booking records with customer PII (name, email, phone, address).
+    //   - No client reads — availability uses the slots collection instead
+    //   - Booking calendar can create new records
+    //   - No updates or deletes from the client
+    // ──────────────────────────────────────────────────────────────
+    match /bookings/{bookingId} {
+      allow get, list: if false;
+      allow create: if request.resource.data.date is string
+                    && request.resource.data.time is string
+                    && request.resource.data.name is string
+                    && request.resource.data.email is string
+                    && request.resource.data.serviceId is string;
+      allow update, delete: if false;
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // subscriptionTokens/{tokenId}
+    //   One-time booking links for subscribers. Token ID is the secret
+    //   (64 random hex chars) — unguessable, so get-by-ID is safe.
+    //   - get: allowed (token ID is the secret; no enumeration)
+    //   - list: denied (prevents token enumeration attacks)
+    //   - create/delete: backend only (Netlify webhook function)
+    //   - update: only allowed to mark the token as used (specific fields)
+    // ──────────────────────────────────────────────────────────────
+    match /subscriptionTokens/{tokenId} {
+      allow get: if true;
+      allow list: if false;
+      allow create, delete: if false;
+      allow update: if request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['used','usedAt','bookedDate','bookedTime'])
+                    && request.resource.data.used == true
+                    && !resource.data.used;   // can't re-mark an already-used token
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // subscriptions/{subId}
+    //   Subscriber records (status, counter, PII). Backend-only except
+    //   for resetting the consecutiveUnusedCycles counter to 0 after
+    //   a customer successfully books via their token.
+    // ──────────────────────────────────────────────────────────────
+    match /subscriptions/{subId} {
+      allow read: if false;
+      allow create, delete: if false;
+      allow update: if request.resource.data.diff(resource.data).affectedKeys()
+                         .hasOnly(['consecutiveUnusedCycles'])
+                    && request.resource.data.consecutiveUnusedCycles == 0;
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // dayLocks/{date}
+    //   Lightweight conflict-detection docs used in Firestore transactions.
+    //   All a lock doc contains is { lastUpdated: timestamp }.
+    //   - Both reads and writes allowed (no PII, no business logic here)
+    // ──────────────────────────────────────────────────────────────
+    match /dayLocks/{date} {
+      allow read, write: if true;
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // subscriptionConsents/{subId}
+    //   Stores photoConsent, termsAgreedAt, autoRenewalAgreedAt captured
+    //   at subscription checkout. Written by the client immediately after
+    //   Stripe subscription creation succeeds.
+    //   - No client reads — admin/backend only
+    //   - Client can create (written at checkout)
+    //   - No updates or deletes from the client
+    // ──────────────────────────────────────────────────────────────
+    match /subscriptionConsents/{subId} {
+      allow read, update, delete: if false;
+      allow create: if request.resource.data.email is string
+                    && request.resource.data.termsAgreedAt is string;
+    }
+
+    // ──────────────────────────────────────────────────────────────
+    // Everything else — deny by default
+    // ──────────────────────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

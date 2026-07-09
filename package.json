@@ -1,0 +1,9 @@
+{
+  "name": "pullman-home-cleaning",
+  "version": "1.0.0",
+  "description": "Booking and automation functions for Pullman Home Cleaning",
+  "dependencies": {
+    "firebase-admin": "^12.0.0",
+    "stripe": "^16.0.0"
+  }
+}

@@ -1,0 +1,24 @@
+name: Rebooking Nudge
+
+on:
+  schedule:
+    # 5 AM PDT = 12 PM UTC (summer). Adjust to 1 PM UTC (0 13) Nov-Mar for PST.
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+
+jobs:
+  send-rebooking-nudge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install
+      - name: Send rebooking nudge emails
+        run: node netlify/functions/_runner.js send-rebooking-nudge
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          SITE_URL: https://pullmanhomecleaning.com

@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Clean — Pullman Home Cleaning</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('hgNTK0-romAlWB7Ls');</script>
+
+<style>
+:root{--bg:#111111;--bg2:#1a1a1a;--bg3:#222222;--bg4:#2a2a2a;--brand:#0B6E72;--brand-dim:rgba(11,110,114,0.12);--brand-border:rgba(11,110,114,0.40);--teal:#22863A;--teal-dim:rgba(34,134,58,0.13);--teal-border:rgba(34,134,58,0.38);--text:rgba(255,255,255,0.90);--text-mid:rgba(255,255,255,0.58);--text-low:rgba(255,255,255,0.32);--border:rgba(255,255,255,0.08);--border-h:rgba(255,255,255,0.16);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
+
+.hdr{background:var(--bg);border-bottom:0.5px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;}
+.hdr-ico{width:36px;height:36px;border-radius:8px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px rgba(255,255,255,0.25);}
+.hdr-ico img{width:100%;height:100%;object-fit:contain;}
+.hdr-name{font-family:'DM Serif Display',serif;font-size:16px;color:#fff;}
+.hdr-sub{font-size:11px;color:var(--text-low);text-transform:uppercase;letter-spacing:.07em;}
+
+.demo-bar{background:rgba(11,110,114,.18);border-bottom:0.5px solid var(--brand-border);padding:8px 20px;font-size:12px;color:rgba(200,245,245,.8);text-align:center;line-height:1.6;}
+.demo-bar b{color:#fff;}
+
+.pbar{height:3px;background:var(--bg3);}
+.pinner{height:100%;background:var(--brand);transition:width .35s ease;}
+
+.strow{display:flex;background:var(--bg2);border-bottom:0.5px solid var(--border);overflow-x:auto;}
+.stpip{flex:1;padding:11px 8px;text-align:center;font-size:11px;font-weight:600;color:var(--text-low);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;position:relative;transition:color .2s;}
+.stpip.active{color:var(--text);}
+.stpip.done{color:var(--text-mid);}
+.stpip.active::after{content:'';position:absolute;bottom:0;left:14px;right:14px;height:2px;background:var(--brand);border-radius:1px 1px 0 0;}
+
+.page{max-width:560px;margin:0 auto;padding:32px 20px 80px;}
+.shead{margin-bottom:28px;}
+.shead h1{font-family:'DM Serif Display',serif;font-size:26px;color:#fff;line-height:1.15;margin-bottom:6px;}
+.shead p{font-size:14px;color:var(--text-mid);line-height:1.6;}
+
+.togwrap{display:inline-flex;background:var(--bg3);border-radius:8px;padding:3px;margin-bottom:22px;}
+.tog{padding:8px 20px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;border:none;cursor:pointer;background:transparent;color:var(--text-mid);transition:all .15s;}
+.tog.on{background:var(--brand);color:#fff;}
+
+.svcs{display:flex;flex-direction:column;gap:24px;margin-bottom:28px;}
+.svc-group-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:420px){.svc-group-cards{grid-template-columns:1fr;}}
+.bath-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px;}
+.bath-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:14px;padding:28px 16px;cursor:pointer;transition:border-color .15s,background .15s;position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.bath-card:hover{border-color:var(--border-h);}
+.bath-card.sel{border-color:var(--brand);background:var(--brand-dim);}
+.bath-card.sel .schk{display:flex;}
+.bath-num{font-family:'DM Serif Display',serif;font-size:48px;color:#fff;line-height:1;}
+.bath-label{font-size:13px;color:var(--text-mid);font-weight:500;}
+.bath-card.sel .bath-num{color:var(--text);}
+@media(max-width:420px){.bath-opts{grid-template-columns:repeat(3,1fr);gap:10px;}.bath-num{font-size:36px;}}
+.scard{background:var(--bg2);border:1.5px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;transition:border-color .15s,background .15s;position:relative;}
+.scard:hover{border-color:var(--border-h);}
+.scard.sel{border-color:var(--brand);background:var(--brand-dim);}
+.schk{position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:50%;background:var(--brand);color:#fff;font-size:10px;font-weight:700;display:none;align-items:center;justify-content:center;}
+.scard.sel .schk{display:flex;}
+.stype{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--brand);margin-bottom:5px;}
+.sname{font-family:'DM Serif Display',serif;font-size:16px;color:#fff;margin-bottom:4px;line-height:1.2;padding-right:24px;}
+.sdetail{font-size:12px;color:var(--text-mid);line-height:1.5;margin-bottom:12px;}
+.sprice{display:flex;align-items:baseline;gap:4px;}
+.samt{font-family:'DM Serif Display',serif;font-size:22px;color:var(--teal);}
+.sfreq{font-size:12px;color:var(--text-low);}
+
+.calh{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.calmname{font-family:'DM Serif Display',serif;font-size:20px;color:#fff;}
+.calnav{width:34px;height:34px;border-radius:8px;background:var(--bg3);border:0.5px solid var(--border);color:var(--text-mid);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .15s;font-family:'DM Sans',sans-serif;}
+.calnav:hover{background:var(--bg4);border-color:var(--border-h);}
+.calnav:disabled{opacity:.3;cursor:default;}
+.calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:18px;}
+.caldow{text-align:center;padding:6px 0;font-size:11px;font-weight:600;color:var(--text-low);text-transform:uppercase;letter-spacing:.06em;}
+.calday{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;cursor:pointer;transition:all .12s;color:var(--text-mid);border:1.5px solid transparent;position:relative;}
+.calday:hover:not(.past):not(.off):not(.empty){background:var(--bg3);border-color:var(--border);}
+.calday.past,.calday.off{color:var(--text-low);opacity:.38;cursor:default;}
+.calday.empty{cursor:default;}
+.calday.avail{color:var(--text);}
+.calday.sel{background:var(--brand);border-color:var(--brand);color:#fff;font-weight:700;}
+.calday.tmark::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:var(--teal);}
+.calday.sel.tmark::after{background:rgba(255,255,255,.5);}
+.dchip{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:0.5px solid var(--border);border-radius:8px;padding:9px 14px;font-size:13px;color:var(--text-mid);margin-bottom:24px;}
+.dchip.has{background:var(--brand-dim);border-color:var(--brand-border);color:var(--text);}
+.cdot{width:7px;height:7px;border-radius:50%;background:var(--brand);flex-shrink:0;}
+
+.spinner{width:26px;height:26px;border:2.5px solid rgba(255,255,255,0.1);border-top-color:var(--brand);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-wrap{text-align:center;padding:48px 0;}
+.loading-wrap p{margin-top:14px;font-size:14px;color:var(--text-mid);}
+
+.slabel{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-low);margin-bottom:10px;margin-top:20px;}
+.slabel:first-of-type{margin-top:0;}
+.slotsrow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:4px;}
+@media(max-width:360px){.slotsrow{grid-template-columns:repeat(3,1fr);}}
+.slot{padding:13px 8px;border-radius:9px;background:var(--bg2);border:1.5px solid var(--border);text-align:center;cursor:pointer;transition:all .13s;font-size:14px;font-weight:500;color:var(--text-mid);}
+.slot:hover:not(.booked){border-color:var(--brand-border);color:var(--text);}
+.slot.sel{background:var(--brand-dim);border-color:var(--brand);color:#fff;font-weight:700;}
+.slot.booked{opacity:.3;cursor:not-allowed;font-size:12px;text-decoration:line-through;}
+.slot-sub{font-size:10px;margin-top:3px;color:rgba(255,255,255,.3);text-decoration:none;}
+
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:420px){.fgrid{grid-template-columns:1fr;}}
+.fld{display:flex;flex-direction:column;gap:6px;}
+.fld.s2{grid-column:1/-1;}
+.fld label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-low);}
+.fld input,.fld select,.fld textarea{background:var(--bg2);border:1.5px solid var(--border);border-radius:9px;padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color .15s;width:100%;-webkit-appearance:none;appearance:none;}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--brand-border);box-shadow:0 0 0 3px rgba(11,110,114,.08);}
+.fld.err input,.fld.err select,.fld.err textarea{border-color:#e05555;box-shadow:0 0 0 3px rgba(224,85,85,.12);}
+.fld.err label{color:#e05555;}
+.fld input::placeholder,.fld textarea::placeholder{color:rgba(255,255,255,.18);}
+.fld select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.3)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
+.fld select option{background:#1a1a1a;}
+.fld textarea{resize:vertical;min-height:76px;}
+
+/* ── Summary card ── */
+.sumcard{background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:24px;}
+.sumtitle{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-low);margin-bottom:14px;}
+.sumrow{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:9px 0;border-bottom:0.5px solid var(--border);font-size:14px;}
+.sumrow:last-child{border-bottom:none;}
+.sumkey{color:var(--text-mid);flex-shrink:0;}
+.sumval{color:var(--text);font-weight:600;text-align:right;max-width:60%;}
+.priceval{font-family:'DM Serif Display',serif;font-size:20px;color:var(--teal);}
+
+/* ── Pay step extras ── */
+.pay-section{background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;}
+.pay-section-title{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-low);margin-bottom:16px;}
+.pay-section-title svg{opacity:.5;flex-shrink:0;}
+
+/* Stripe card element wrapper */
+.card-el-wrap{background:var(--bg3);border:1.5px solid var(--border);border-radius:9px;padding:14px;transition:border-color .15s,box-shadow .15s;min-height:46px;}
+.card-el-wrap.StripeElement--focus{border-color:var(--brand-border);box-shadow:0 0 0 3px rgba(11,110,114,.08);}
+.card-el-wrap.StripeElement--invalid{border-color:rgba(248,113,113,.5);}
+
+.card-err{font-size:13px;color:#f87171;margin-top:8px;min-height:20px;line-height:1.4;}
+
+.card-logos{display:flex;align-items:center;gap:6px;margin-bottom:14px;}
+.card-logo{height:22px;background:rgba(255,255,255,0.07);border:0.5px solid var(--border);border-radius:4px;padding:3px 7px;font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--text-mid);display:flex;align-items:center;}
+
+.sub-note{background:rgba(34,134,58,.08);border:0.5px solid var(--teal-border);border-radius:8px;padding:10px 14px;font-size:12px;color:rgba(34,134,58,.9);line-height:1.6;margin-top:4px;}
+
+.trust-row{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:16px;padding-top:16px;border-top:0.5px solid var(--border);}
+.trust-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-low);}
+.trust-item svg{opacity:.45;flex-shrink:0;}
+
+/* ── Terms checkbox ── */
+.terms-wrap{display:flex;align-items:flex-start;gap:10px;margin-top:20px;padding:14px 16px;background:rgba(255,255,255,0.04);border:0.5px solid var(--border);border-radius:10px;}
+.terms-wrap input[type=checkbox]{width:17px;height:17px;min-width:17px;accent-color:var(--brand);margin-top:2px;cursor:pointer;}
+.terms-label{font-size:12px;color:var(--text-mid);line-height:1.6;}
+.terms-label a{color:var(--brand);text-decoration:underline;text-underline-offset:2px;}
+
+/* ── Buttons ── */
+.btnrow{display:flex;gap:10px;margin-top:32px;}
+.btn-back{padding:14px 20px;border-radius:9px;background:transparent;border:1.5px solid var(--border);color:var(--text-mid);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn-back:hover:not(:disabled){border-color:var(--border-h);color:var(--text);}
+.btn-back:disabled{opacity:.35;cursor:not-allowed;}
+.btn-next{flex:1;padding:15px 24px;border-radius:9px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:not-allowed;transition:all .2s;letter-spacing:.01em;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-next:not(:disabled){background:#0A7A82;border-color:#0A7A82;color:rgba(255,255,255,0.9);cursor:pointer;}
+.btn-next:not(:disabled):hover{background:#0B8890;border-color:#0B8890;}
+.btn-spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0;}
+
+/* ── Done ── */
+.donescreen{text-align:center;padding:32px 0 0;}
+.doneico{width:68px;height:68px;border-radius:50%;background:var(--teal-dim);border:1.5px solid var(--teal-border);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 22px;}
+.donetitle{font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:10px;}
+.donesub{font-size:14px;color:var(--text-mid);line-height:1.7;max-width:340px;margin:0 auto 28px;}
+.doneig{margin-top:26px;font-size:14px;color:var(--text-low);line-height:1.8;}
+.doneig strong{color:var(--brand);}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-ico"><img src="logo-header-demo2.svg" alt="Logo"></div>
+  <div>
+    <div class="hdr-name">Pullman Home Cleaning</div>
+    <div class="hdr-sub">Pullman Off-Campus</div>
+  </div>
+</div>
+
+<div id="demo-bar" style="display:none" class="demo-bar">
+  <b>Demo mode</b> — add your Stripe &amp; Firebase keys in the code to enable live payments and booking storage.
+</div>
+
+<div class="pbar"><div class="pinner" id="pinner"></div></div>
+<div class="strow" id="strow"></div>
+<div class="page" id="page"></div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   FIREBASE CONFIG
+   console.firebase.google.com → new project → web app → copy config
+   ═══════════════════════════════════════════════════════════════════ */
+const FIREBASE_CONFIG = {
+  apiKey:            "AIzaSyBb1RK5bLvEiyvDhphzkh1KcYszqjjtDno",
+  authDomain:        "pullman-cleaning.firebaseapp.com",
+  projectId:         "pullman-cleaning",
+  storageBucket:     "pullman-cleaning.firebasestorage.app",
+  messagingSenderId: "382553468359",
+  appId:             "1:382553468359:web:f1f3a8de2f5670d8087de2"
+};
+
+/* ═══════════════════════════════════════════════════════════════════
+   STRIPE PUBLISHABLE KEY  (starts with pk_test_ or pk_live_)
+   dashboard.stripe.com → Developers → API keys
+   ═══════════════════════════════════════════════════════════════════ */
+const STRIPE_PK = "pk_test_51ThBjJRwpwM4VavSCcF27dkhaPl7XCpMSEtGmtDtOvW7GsJM6QdnnanOGuqOEyoIpgXeQWIHHmzr2SRyeDsrCOku00aYtAYQAT";
+
+/* ─── Demo mode check ─────────────────────────────────────────── */
+const FIREBASE_LIVE = FIREBASE_CONFIG.projectId.startsWith('PASTE') === false && FIREBASE_CONFIG.projectId !== "YOUR_PROJECT_ID";
+const STRIPE_LIVE   = STRIPE_PK.startsWith('PASTE') === false && STRIPE_PK !== "YOUR_STRIPE_PUBLISHABLE_KEY";
+const DEMO          = !FIREBASE_LIVE || !STRIPE_LIVE;
+if (DEMO) document.getElementById('demo-bar').style.display = 'block';
+
+/* ─── Firebase init ───────────────────────────────────────────── */
+let db;
+if (FIREBASE_LIVE) {
+  firebase.initializeApp(FIREBASE_CONFIG);
+  db = firebase.firestore();
+}
+
+/* ─── Stripe lazy init ────────────────────────────────────────── */
+let stripeInst = null, cardNumber = null, cardExpiry = null, cardCvc = null;
+
+function ensureStripe() {
+  if (stripeInst || !STRIPE_LIVE) return;
+  stripeInst = Stripe(STRIPE_PK);
+  const els = stripeInst.elements({
+    fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap' }]
+  });
+  const style = {
+    base: {
+      color: 'rgba(255,255,255,0.9)',
+      fontFamily: "'DM Sans', sans-serif",
+      fontSize: '15px',
+      fontSmoothing: 'antialiased',
+      '::placeholder': { color: 'rgba(255,255,255,0.25)' }
+    },
+    invalid: { color: '#f87171', iconColor: '#f87171' }
+  };
+  cardNumber = els.create('cardNumber', { style, showIcon: true });
+  cardExpiry = els.create('cardExpiry', { style });
+  cardCvc    = els.create('cardCvc',    { style });
+  [cardNumber, cardExpiry, cardCvc].forEach(el => {
+    el.on('change', e => {
+      const errEl = document.getElementById('card-err');
+      if (errEl) errEl.textContent = e.error ? e.error.message : '';
+    });
+  });
+}
+
+/* ─── Data ────────────────────────────────────────────────────── */
+const STEPS = ['Bathrooms','Pets','Service','Date','Time','Your Info','Pay'];
+
+const SVCS = [
+  {id:'qc2',schedMinutes:90, type:'Quick Clean',name:'2 Bathrooms',  detail:'Both bathrooms scrubbed, floors & trash',     one:85,    sub:80,  dur:'~75 min'},
+  {id:'wh1',schedMinutes:90, type:'Whole Home', name:'Studio / 1 Bath',detail:'Kitchen, bathroom(s), bedroom, all floors', one:90, sub:85, dur:'~75 min'},
+  {id:'wh2',schedMinutes:150,type:'Whole Home', name:'2-Bath Home',  detail:'Kitchen, 2 bathrooms, bedrooms, all floors', one:140, sub:135, dur:'~2h 30m'},
+  {id:'dc1',schedMinutes:120,type:'Deep Clean', name:'Studio / 1 Bath',detail:'Great for move in/outs — inside oven/fridge, cabinets, all surfaces, baseboards', one:160, sub:155, dur:'~2 hrs'},
+  {id:'dc2',schedMinutes:165,type:'Deep Clean', name:'2-Bath Home',  detail:'Great for move in/outs — inside oven/fridge, cabinets, 2 bathrooms, all surfaces, baseboards', one:225, sub:220, dur:'~2h 45m'},
+  {id:'wh3',schedMinutes:195,type:'Whole Home', name:'3-Bath Home',  detail:'Kitchen, 3 bathrooms, all bedrooms, common areas, all floors', one:190, sub:185, dur:'~3h 15m'},
+  {id:'dc3',schedMinutes:225,type:'Deep Clean', name:'3-Bath Home',  detail:'Great for move in/outs — inside oven/fridge, cabinets, 3 bathrooms, all surfaces, baseboards', one:290, sub:285, dur:'~3h 45m'}
+];
+
+const COMPLEXES = {
+  'The Hills on Grand':     '2905 N Grand Ave, Pullman, WA 99163',
+  'The Retreat at Pullman': '2045 NE Merman Dr, Pullman, WA 99163',
+  'The Grove at Pullman':   '1560 NE Brandi Way, Pullman, WA 99163',
+  'The Annex of Pullman':   '1555 NE Northwood Dr, Pullman, WA 99163',
+  'University Crossing':    '1490 NE North Fairway Rd, Pullman, WA 99163',
+  'Cougar Ridge Apartments':'2024 NE Terre View Dr, Pullman, WA 99163',
+  'The Ruckus':             '1920 NE Terre View Dr, Pullman, WA 99163',
+  'Birch Hills Apartments': '2200 NE Westwood Dr, Pullman, WA 99163',
+  'Maple Valley Apartments':'2290 NE Westwood Dr, Pullman, WA 99163',
+  'Emerald Downs Apartments':'910 NE Providence Ct, Pullman, WA 99163',
+  'The Canyon Apartments':  '1500 NW Canyon View Dr, Pullman, WA 99163',
+  'Other Complex':          '',
+  'House':                  '',
+};
+
+const MORNING   = ['8:00 AM','9:00 AM','10:00 AM','11:00 AM'];
+const AFTERNOON = ['12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM'];
+const VALID_AMOUNTS = [80, 85, 90, 135, 140, 155, 160, 185, 190, 220, 225, 285, 290];
+
+/* ─── Scheduling constants ────────────────────────────────────── */
+const TRAVEL_BUFFER_MIN = 30;   // minutes of travel buffer added after every job
+const DAILY_CAP_MIN     = 420;  // max total scheduled minutes per day (durations + buffers)
+
+const today = new Date(); today.setHours(0,0,0,0);
+
+const _urlSvc  = new URLSearchParams(window.location.search).get('svc');
+const _token   = new URLSearchParams(window.location.search).get('token');
+let tokenMode  = false;   // true when customer arrived via a subscription booking link
+let tokenData  = null;    // the subscriptionToken document from Firebase
+
+// Derive bathrooms from a URL ?svc= param so deep links skip step 0
+function bathsFromSvc(id) {
+  if (!id) return null;
+  if (['wh1','dc1'].includes(id)) return 1;
+  if (['wh2','dc2','qc2'].includes(id)) return 2;
+  if (['wh3','dc3'].includes(id)) return 3;
+  return null;
+}
+
+let s = {
+  step: _urlSvc ? 1 : 0,   // skip bathroom step if URL pre-selects a service
+  bathrooms: bathsFromSvc(_urlSvc),
+  sub:false, svcId:_urlSvc||null, date:null, time:null, freq:'once',
+  calY:today.getFullYear(), calM:today.getMonth(),
+  name:'', email:'', phone:'', address:'', complex:'', unit:'', notes:'',
+  photoConsent:false, hasPets:null, subscriptionId:null, autoRenewalAgreedAt:null
+};
+
+const availCache = {};  // { [date]: Array<{time:string, serviceId:string}> }
+
+/* ─── Scheduling helpers ─────────────────────────────────────── */
+
+// Convert a display label like "9:00 AM" or "1:00 PM" to minutes since midnight
+function slotToMinutes(label) {
+  const [time, ampm] = label.split(' ');
+  const [h, m] = time.split(':').map(Number);
+  let hour = h;
+  if (ampm === 'PM' && h !== 12) hour += 12;
+  if (ampm === 'AM' && h === 12) hour = 0;
+  return hour * 60 + (m || 0);
+}
+
+// True if two jobs (each gets +TRAVEL_BUFFER_MIN) overlap
+function windowsOverlap(aStart, aDur, bStart, bDur) {
+  return aStart < bStart + bDur + TRAVEL_BUFFER_MIN &&
+         bStart < aStart + aDur + TRAVEL_BUFFER_MIN;
+}
+
+// True if starting svcId at slotLabel would overlap any booking in the bookings array
+function isSlotBlocked(slotLabel, svcId, bookings) {
+  if (!bookings || !bookings.length) return false;
+  const svc = SVCS.find(v => v.id === svcId);
+  if (!svc) return false;
+  const slotMin = slotToMinutes(slotLabel);
+  return bookings.some(b => {
+    const bSvc = SVCS.find(v => v.id === b.serviceId);
+    const bMin = slotToMinutes(b.time);
+    const bDur = bSvc ? bSvc.schedMinutes : 60;
+    return windowsOverlap(slotMin, svc.schedMinutes, bMin, bDur);
+  });
+}
+
+// Total scheduled minutes already consumed on a day (durations + buffers)
+function dailyMinutesUsed(bookings) {
+  if (!bookings || !bookings.length) return 0;
+  return bookings.reduce((acc, b) => {
+    const bSvc = SVCS.find(v => v.id === b.serviceId);
+    return acc + (bSvc ? bSvc.schedMinutes : 60) + TRAVEL_BUFFER_MIN;
+  }, 0);
+}
+
+// True if adding svcId on dateStr would push the day over DAILY_CAP_MIN
+// Returns false (not capped) when date hasn't been fetched yet
+function isDateCapped(dateStr, svcId) {
+  const bookings = availCache[dateStr];
+  if (!bookings) return false;
+  const svc = SVCS.find(v => v.id === svcId);
+  if (!svc) return false;
+  return dailyMinutesUsed(bookings) + svc.schedMinutes + TRAVEL_BUFFER_MIN > DAILY_CAP_MIN;
+}
+
+/* ─── Firebase: fetch booked slots ───────────────────────────── */
+async function fetchBooked(date) {
+  if (availCache[date]) return availCache[date];
+  if (!FIREBASE_LIVE) { availCache[date] = []; return availCache[date]; }
+  try {
+    const snap = await db.collection('slots').where('date','==',date).get();
+    availCache[date] = snap.docs.map(d => ({ time: d.data().time, serviceId: d.data().serviceId }));
+    return availCache[date];
+  } catch(e) { console.error(e); return []; }
+}
+
+/* ─── Firebase: save booking (overlap + cap protection) ─────── */
+async function saveBooking(paymentIntentId) {
+  if (!FIREBASE_LIVE) return { ok: true };
+  const v = SVCS.find(x => x.id === s.svcId);
+  const slotRef    = db.collection('bookings').doc(`${s.date}__${s.time.replace(/[: ]/g,'_')}`);
+  const slotsRef   = db.collection('slots').doc(`${s.date}__${s.time.replace(/[: ]/g,'_')}`);
+  // dayLocks doc is touched on every booking for this date so concurrent
+  // transactions conflict and retry rather than both writing through.
+  const dayLockRef = db.collection('dayLocks').doc(s.date);
+  const dayQuery   = db.collection('slots').where('date','==',s.date);
+  try {
+    await db.runTransaction(async tx => {
+      // Read both the lock doc and all existing bookings for the day
+      const [daySnap] = await Promise.all([tx.get(dayQuery), tx.get(dayLockRef)]);
+      const existing  = daySnap.docs.map(d => d.data());
+      const newMin    = slotToMinutes(s.time);
+
+      // Reject if new job overlaps any existing booking (+ buffers)
+      for (const b of existing) {
+        const bSvc = SVCS.find(x => x.id === b.serviceId);
+        const bMin = slotToMinutes(b.time);
+        const bDur = bSvc ? bSvc.schedMinutes : 60;
+        if (windowsOverlap(newMin, v.schedMinutes, bMin, bDur)) {
+          throw Object.assign(new Error('OVERLAP'), { code:'TAKEN' });
+        }
+      }
+
+      // Reject if adding this job would exceed the daily cap
+      const usedMin = existing.reduce((acc, b) => {
+        const bSvc = SVCS.find(x => x.id === b.serviceId);
+        return acc + (bSvc ? bSvc.schedMinutes : 60) + TRAVEL_BUFFER_MIN;
+      }, 0);
+      if (usedMin + v.schedMinutes + TRAVEL_BUFFER_MIN > DAILY_CAP_MIN) {
+        throw Object.assign(new Error('CAP'), { code:'TAKEN' });
+      }
+
+      // Write the lock (creates conflict for any concurrent transaction on this date)
+      tx.set(dayLockRef, { lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+      // Write public availability record (no PII — read by availability checks)
+      tx.set(slotsRef, { date:s.date, time:s.time, serviceId:s.svcId, schedMinutes:v.schedMinutes });
+      tx.set(slotRef, {
+        date:s.date, time:s.time, name:s.name, email:s.email, phone:s.phone,
+        address:s.address, unit:s.unit||'', complex:s.complex, notes:s.notes,
+        service: v.type + ' — ' + v.name, serviceId:s.svcId,
+        subscription:s.sub, frequency:s.freq, price:(s.sub ? v.sub : v.one) + (s.hasPets ? 10 : 0), hasPets:s.hasPets||false,
+        paymentIntentId, paid:!!paymentIntentId,
+        subscriptionId: s.subscriptionId || null,
+        photoConsent: s.photoConsent || false,
+        hasPets: s.hasPets || false,
+        termsAgreedAt: new Date().toISOString(),
+        autoRenewalAgreedAt: s.sub ? (s.autoRenewalAgreedAt || new Date().toISOString()) : null,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    });
+    delete availCache[s.date];
+    return { ok:true };
+  } catch(e) {
+    if (e.code==='TAKEN') return { ok:false, reason:'taken' };
+    return { ok:false, reason:'error' };
+  }
+}
+
+
+
+/* ─── Render ──────────────────────────────────────────────────── */
+function render() {
+  let pct;
+  let pills;
+  if (tokenMode) {
+    const tIdx = [3,4,8,7].indexOf(s.step);
+    pct   = tIdx >= 0 ? ((tIdx+1) / 4) * 100 : 100;
+    const tNames = ['Date','Time','Confirm','Done'];
+    pills = tNames.map((n,i) => {
+      const cl = i < tIdx ? 'done' : i === tIdx ? 'active' : '';
+      return `<div class="stpip ${cl}">${n}</div>`;
+    }).join('');
+  } else if (s.sub) {
+    const subOrder = [0,1,2,5,6,7];
+    const sIdx = subOrder.indexOf(s.step);
+    pct   = sIdx >= 0 ? (sIdx / (subOrder.length-1)) * 100 : 100;
+    const sNames = ['Bathrooms','Pets','Service','Your Info','Pay','Done'];
+    pills = sNames.map((n,i) => {
+      const cl = i < sIdx ? 'done' : i === sIdx ? 'active' : '';
+      return `<div class="stpip ${cl}">${n}</div>`;
+    }).join('');
+  } else {
+    pct   = s.step >= 7 ? 100 : (s.step / (STEPS.length-1)) * 100;
+    pills = STEPS.map((n,i) => {
+      const cl = i < s.step ? 'done' : i === s.step ? 'active' : '';
+      return `<div class="stpip ${cl}">${n}</div>`;
+    }).join('');
+  }
+  document.getElementById('pinner').style.width = pct + '%';
+  document.getElementById('strow').innerHTML = pills;
+  const p = document.getElementById('page');
+  p.innerHTML = '';
+  [bathStep, petsStep, sStep, dStep, tStep, iStep, payStep, doneStep, confirmStep][s.step]?.(p);
+  window.scrollTo(0,0);
+}
+
+/* ─── Step navigation ────────────────────────────────────────── */
+function go(dir) {
+  let next = s.step + dir;
+  if (tokenMode) {
+    // Token mode: Date(3) → Time(4) → Confirm(8) → Done(7)
+    if (s.step === 4 && dir > 0) next = 8;
+    if (s.step === 8 && dir < 0) next = 4;
+    s.step = Math.max(3, Math.min(next, 8));
+  } else if (s.sub) {
+    // Subscription sign-up: skip Date(3) and Time(4) steps
+    if (dir > 0 && (next === 3 || next === 4)) next = 5;
+    if (dir < 0 && (next === 3 || next === 4)) next = 2;
+    s.step = Math.max(0, Math.min(next, 7));
+  } else {
+    s.step = Math.max(0, Math.min(next, 7));
+  }
+  render();
+}
+
+/* ── Step 0: Bathrooms ─────────────────────────────────────────── */
+function bathStep(c) {
+  c.innerHTML = `
+    <div class="shead"><h1>How many bathrooms does your home have?</h1><p>We'll show you the services available for your home.</p></div>
+    <div class="bath-opts">
+      ${[1,2,3].map(n=>`
+        <div class="bath-card ${s.bathrooms===n?'sel':''}" onclick="pickBath(${n})">
+          <div class="schk">✓</div>
+          <div class="bath-num">${n}</div>
+          <div class="bath-label">Bathroom${n>1?'s':''}</div>
+        </div>`).join('')}
+    </div>
+    <div class="btnrow">
+      <button class="btn-next" onclick="go(1)" ${!s.bathrooms?'disabled':''}>Continue → Pets Questionce</button>
+    </div>`;
+}
+function pickBath(n) {
+  // Reset service if it doesn't match the new bathroom count
+  if (s.svcId && bathsFromSvc(s.svcId) !== n) s.svcId = null;
+  s.bathrooms = n;
+  render();
+}
+
+/* ── Step 1: Pets ───────────────────────────────────────────────── */
+function petsStep(c) {
+  const optStyle = (active) => `
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;
+    padding:22px 12px;border-radius:14px;cursor:pointer;
+    background:${active ? 'var(--brand-dim)' : 'var(--bg2)'};
+    border:1.5px solid ${active ? 'var(--brand)' : 'rgba(255,255,255,0.18)'};
+    transition:border-color .15s,background .15s;
+    font-family:inherit;
+  `.replace(/\n\s*/g,' ');
+  c.innerHTML = `
+    <div class="shead"><h1>Do you have pets in the home?</h1><p>Click yes if you have a dog or cat.</p></div>
+    <div style="display:flex;gap:14px;margin-bottom:28px;">
+      <button style="${optStyle(s.hasPets===true)}" onclick="s.hasPets=true;render()">
+        <span style="font-size:28px;line-height:1;">🐾</span>
+        <span style="font-size:14px;font-weight:600;color:${s.hasPets===true ? 'var(--brand)' : 'var(--text)'};">Yes, I have pets</span>
+        <span style="font-size:11px;color:var(--text-low);">Dogs, cats</span>
+      </button>
+      <button style="${optStyle(s.hasPets===false)}" onclick="s.hasPets=false;render()">
+        <span style="font-size:28px;line-height:1;">🏠</span>
+        <span style="font-size:14px;font-weight:600;color:${s.hasPets===false ? 'var(--brand)' : 'var(--text)'};">No pets</span>
+        <span style="font-size:11px;color:var(--text-low);">&nbsp;</span>
+      </button>
+    </div>
+    <div class="btnrow">
+      <button class="btn-back" onclick="go(-1)">&#8592; Back</button>
+      <button class="btn-next" onclick="go(1)" ${s.hasPets===null?'disabled':''}>Continue → Pick a Service</button>
+    </div>`;
+}
+
+/* ── Step 2: Service ───────────────────────────────────────────── */
+function sStep(c) {
+  c.innerHTML = `
+    <div class="shead"><h1>Pick your service</h1><p>One-time, monthly, or bi-weekly subscription. Cancel subscriptions anytime.</p></div>
+    <div class="togwrap">
+      <button class="tog ${s.freq==='once'?'on':''}" onclick="setSub('once')">One-time</button>
+      <button class="tog ${s.freq==='monthly'?'on':''}" onclick="setSub('monthly')">Monthly</button>
+      <button class="tog ${s.freq==='biweekly'?'on':''}" onclick="setSub('biweekly')">Bi-weekly</button>
+    </div>
+    <div class="svcs">
+      <div class="svc-group-cards">
+        ${SVCS.filter(v=>bathsFromSvc(v.id)===s.bathrooms).map(v=>`
+          <div class="scard ${s.svcId===v.id?'sel':''}" onclick="pickSvc('${v.id}')">
+            <div class="schk">✓</div>
+            <div class="stype">${v.type}</div>
+            <div class="sname">${v.name}</div>
+            <div class="sdetail">${v.detail}</div>
+            <div class="sprice">
+              <span class="samt">$${(s.sub?v.sub:v.one)+(s.hasPets?10:0)}</span>
+              <span class="sfreq">${s.freq==='monthly'?'/mo':s.freq==='biweekly'?'per clean':''}</span>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>
+    ${['wh1','wh2','wh3','dc1','dc2','dc3'].includes(s.svcId)?'<div style="margin-bottom:12px;font-size:12px;color:rgba(255,180,180,0.75);text-align:center;">⚠ Counters &amp; sink must be clear of dishes before your clean.</div>':''}
+    <div class="btnrow">
+      <button class="btn-back" onclick="go(-1)">&#8592; Back</button>
+      <button class="btn-next" onclick="go(1)" ${!s.svcId?'disabled':''}>Continue → Pick a Date</button>
+    </div>`;
+}
+function setSub(v){s.freq=v;s.sub=(v!=='once');if(s.sub){s.date=null;s.time=null;}render();}
+function pickSvc(id){s.svcId=id;render();}
+
+/* ── Step 2: Date ──────────────────────────────────────────────── */
+function dStep(c) {
+  const first = new Date(s.calY,s.calM,1).getDay();
+  const days  = new Date(s.calY,s.calM+1,0).getDate();
+  const mname = new Date(s.calY,s.calM,1).toLocaleString('default',{month:'long',year:'numeric'});
+  const prevOk = !(s.calY===today.getFullYear()&&s.calM<=today.getMonth());
+  let cells=[];
+  for(let i=0;i<first;i++) cells.push({empty:true});
+  for(let d=1;d<=days;d++){
+    const dt=new Date(s.calY,s.calM,d);
+    const str=`${s.calY}-${String(s.calM+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isPast=dt<today, isSun=dt.getDay()===0;
+    const isCapped=s.svcId&&!isPast&&!isSun ? isDateCapped(str,s.svcId) : false;
+    cells.push({d,str,past:isPast,sun:isSun,blocked:isCapped,tmark:dt.getTime()===today.getTime(),sel:s.date===str});
+  }
+  const selTxt = s.date
+    ? new Date(s.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})
+    : 'No date selected';
+  c.innerHTML = `
+    <div class="shead"><h1>When should we come?</h1><p>Available Monday – Saturday. We're closed Sundays.</p></div>
+    <div class="calh">
+      <button class="calnav" onclick="calShift(-1)" ${prevOk?'':'disabled'}>&#8592;</button>
+      <div class="calmname">${mname}</div>
+      <button class="calnav" onclick="calShift(1)">&#8594;</button>
+    </div>
+    <div class="calgrid">
+      ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="caldow">${d}</div>`).join('')}
+      ${cells.map(cell=>{
+        if(cell.empty) return '<div class="calday empty"></div>';
+        const unavail=cell.past||cell.sun||cell.blocked;
+        const cls=['calday',unavail?(cell.sun?'off':'past'):'avail',cell.sel?'sel':'',cell.tmark?'tmark':''].filter(Boolean).join(' ');
+        const click=!unavail;
+        return `<div class="${cls}"${click?` onclick="pickDate('${cell.str}')"`:''}>${cell.d}</div>`;
+      }).join('')}
+    </div>
+    <div class="dchip ${s.date?'has':''}">
+      ${s.date?'<div class="cdot"></div>':'📅'}
+      <span>${selTxt}</span>
+    </div>
+    <div class="btnrow">
+      <button class="btn-back" onclick="go(-1)">&#8592; Back</button>
+      <button class="btn-next" onclick="go(1)" ${!s.date?'disabled':''}>Continue → Pick a Time</button>
+    </div>`;
+
+  // Pre-fetch all non-past, non-Sunday dates so cap check has data for graying
+  if (FIREBASE_LIVE && s.svcId) {
+    const toFetch = cells.filter(cell => cell.str && !cell.past && !cell.sun && !availCache[cell.str]).map(cell => cell.str);
+    if (toFetch.length) {
+      Promise.all(toFetch.map(d => fetchBooked(d))).then(() => { if (s.step === 2) render(); });
+    }
+  }
+}
+function calShift(d){s.calM+=d;if(s.calM>11){s.calM=0;s.calY++;}if(s.calM<0){s.calM=11;s.calY--;}render();}
+function pickDate(str){s.date=str;s.time=null;fetchBooked(str);render();}
+
+/* ── Step 3: Time ──────────────────────────────────────────────── */
+function tStep(c) {
+  const dlabel=new Date(s.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  if (availCache[s.date]) { renderSlots(c,dlabel,availCache[s.date]); return; }
+  c.innerHTML=`
+    <div class="shead"><h1>Pick a time</h1><p>${dlabel} · Checking live availability…</p></div>
+    <div class="loading-wrap"><div class="spinner"></div><p>Loading available times…</p></div>
+    <div class="btnrow" style="margin-top:28px">
+      <button class="btn-back" onclick="go(-1)">&#8592; Back</button>
+      <button class="btn-next" disabled>${tokenMode?'Continue → Confirm':'Continue → Your Info'}</button>
+    </div>`;
+  fetchBooked(s.date).then(booked => { if(s.step!==4) return; renderSlots(c,dlabel,booked); });
+}
+function renderSlots(c,dlabel,bookings){
+  const isToday=s.date===new Date().toLocaleDateString('en-CA');
+  const nowPlus2=new Date(Date.now()+2*60*60*1000);
+  function slotHtml(lbl){
+    const blocked=isSlotBlocked(lbl,s.svcId,bookings),sel=s.time===lbl;
+    let tooSoon=false;
+    if(isToday){
+      const slotMin=slotToMinutes(lbl);
+      const slotDate=new Date();slotDate.setHours(Math.floor(slotMin/60),slotMin%60,0,0);
+      tooSoon=slotDate<nowPlus2;
+    }
+    const unavail=blocked||tooSoon;
+    return `<div class="slot${unavail?' booked':sel?' sel':''}"${!unavail?` onclick="pickTime('${lbl}')"`:''}>${lbl}${blocked?'<div class="slot-sub">Booked</div>':tooSoon?'<div class="slot-sub">Unavailable</div>':''}</div>`;
+  }
+  c.innerHTML=`
+    <div class="shead"><h1>Pick a time</h1><p>${dlabel} · All times Pacific (PT)</p></div>
+    <div class="slabel">Morning</div>
+    <div class="slotsrow">${MORNING.map(t=>slotHtml(t)).join('')}</div>
+    <div class="slabel">Afternoon</div>
+    <div class="slotsrow">${AFTERNOON.map(t=>slotHtml(t)).join('')}</div>
+    <div class="btnrow" style="margin-top:28px">
+      <button class="btn-back" onclick="go(-1)">&#8592; Back</button>
+      <button class="btn-next" onclick="go(1)" ${!s.time?'disabled':''}>${tokenMode?'Continue → Confirm':'Continue → Your Info'}</button>
+    </div>`;
+}
+function pickTime(t){s.time=t;const c=document.getElementById('page');const dl=new Date(s.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});renderSlots(c,dl,availCache[s.date]||[]);}
+
+/* ── Step 4: Info ──────────────────────────────────────────────── */
+function iStep(c) {
+  c.innerHTML=`
+    <div class="shead"><h1>Your info</h1><p>We'll send a receipt and booking confirmation to your email.</p></div>
+    <div class="fgrid">
+      <div class="fld s2"><label>Full Name *</label><input type="text" id="fn" placeholder="Jordan Smith" value="${esc(s.name)}" oninput="s.name=this.value"></div>
+      <div class="fld"><label>Email *</label><input type="email" id="fe" placeholder="your@email.com" value="${esc(s.email)}" oninput="s.email=this.value"></div>
+      <div class="fld"><label>Phone *</label><input type="tel" id="fp" placeholder="(509) 555-0100" value="${esc(s.phone)}" oninput="s.phone=this.value"></div>
+      <div class="fld" style="margin-top:-6px">
+        <label style="font-size:12px;color:var(--text-low)">Quick fill — select your complex</label>
+        <select id="fc" onchange="onComplexChange(this.value)">
+          <option value="">Choose a complex to auto-fill address…</option>
+          ${Object.keys(COMPLEXES).map(cx=>`<option value="${cx}"${s.complex===cx?' selected':''}>${cx}</option>`).join('')}
+        </select>
+      </div>
+      <div class="fld" id="fu-wrap"><label id="fu-lbl">Unit / Apt # (if house, put "No") *</label><input type="text" id="fu" placeholder="e.g. 204B" value="${esc(s.unit)}" oninput="s.unit=this.value"></div>
+      <div class="fld s2"><label>Full Address *</label><input type="text" id="fa" placeholder="e.g. 123 Main St, Apt 204B, Pullman, WA 99163" value="${esc(s.address)}" oninput="s.address=this.value"></div>
+      <div class="fld s2"><label>Notes for your cleaner (optional)</label><textarea id="fno" placeholder="Focus areas, access instructions, pets, etc." oninput="s.notes=this.value">${esc(s.notes)}</textarea></div>
+    </div>
+    <div style="display:flex;align-items:flex-start;gap:10px;margin-top:4px;padding:14px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:10px;">
+      <input type="checkbox" id="fphoto" style="width:17px;height:17px;min-width:17px;accent-color:var(--brand);margin-top:2px;cursor:pointer;" ${s.photoConsent?'checked':''} onchange="s.photoConsent=this.checked">
+      <label for="fphoto" style="font-size:13px;color:var(--text-low);line-height:1.55;cursor:pointer;">
+        <strong style="color:var(--text);font-weight:500;">Photo permission (optional)</strong> — I allow Pullman Home Cleaning to use before/after photos of my space for Google reviews and marketing. My address will never be shown.
+      </label>
+    </div>
+    <div class="btnrow">
+      <button class="btn-back" onclick="go(-1)">&#8592; Back</button>
+      <button class="btn-next" onclick="submitInfo()">Continue → Pay</button>
+    </div>`;
+}
+function onComplexChange(val){
+  s.complex=val;
+  const fa=document.getElementById('fa');
+  const addr=COMPLEXES[val];
+  if(addr!==undefined){fa.value=addr;s.address=addr;}
+  const fuLbl=document.getElementById('fu-lbl');
+  const fuInput=document.getElementById('fu');
+  const fuWrap=document.getElementById('fu-wrap');
+  if(val==='House'){
+    fuWrap.style.display='none';
+    s.unit='N/A';
+  } else {
+    fuWrap.style.display='';
+    if(s.unit==='N/A')s.unit='';
+    fuInput.placeholder='e.g. 204B';
+  }
+}
+function esc(v){return String(v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');}
+function submitInfo(){
+  s.name=document.getElementById('fn').value.trim();
+  s.email=document.getElementById('fe').value.trim();
+  s.phone=document.getElementById('fp').value.trim();
+  s.address=document.getElementById('fa').value.trim();
+  s.complex=document.getElementById('fc').value;
+  // Don't overwrite unit for House — onComplexChange already set it to 'N/A'
+  if (s.complex !== 'House') s.unit=(document.getElementById('fu')?.value||'').trim();
+  s.notes=document.getElementById('fno').value.trim();
+  s.photoConsent=document.getElementById('fphoto').checked;
+  const required=[['fn',s.name],['fe',s.email],['fp',s.phone],['fa',s.address],...(s.complex!=='House'?[['fu',s.unit]]:[])];
+  let hasErr=false;
+  required.forEach(([id,val])=>{
+    const el=document.getElementById(id);
+    const fld=el?el.closest('.fld'):null;
+    if(fld){if(!val){fld.classList.add('err');hasErr=true;}else{fld.classList.remove('err');}}
+  });
+  if(hasErr)return;
+  go(1);
+}
+
+/* ── Step 5: Review & Pay ──────────────────────────────────────── */
+function payStep(c) {
+  const v     = SVCS.find(x => x.id === s.svcId);
+  const basePrice = s.sub ? v.sub : v.one;
+  const price = basePrice + (s.hasPets ? 10 : 0);
+  const dstr  = new Date(s.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+
+  c.innerHTML = `
+    <div class="shead">
+      <h1>Review &amp; pay</h1>
+      <p>Confirm your booking details, then complete payment below.</p>
+    </div>
+
+    <div class="sumcard">
+      <div class="sumtitle">Booking summary</div>
+      <div class="sumrow"><span class="sumkey">Service</span><span class="sumval">${v.type} — ${v.name}</span></div>
+      <div class="sumrow"><span class="sumkey">Frequency</span><span class="sumval">${s.freq==='monthly'?'Monthly subscription':s.freq==='biweekly'?'Bi-weekly subscription':'One-time'}</span></div>
+      ${s.sub
+        ? `<div class="sumrow"><span class="sumkey">Scheduling</span><span class="sumval">You'll receive a booking link by email after each charge</span></div>`
+        : `<div class="sumrow"><span class="sumkey">Date &amp; Time</span><span class="sumval">${dstr} at ${s.time}</span></div>`
+      }
+      <div class="sumrow"><span class="sumkey">Location</span><span class="sumval">${s.address}${s.unit?', Unit '+s.unit:''}</span></div>
+      <div class="sumrow"><span class="sumkey">Customer</span><span class="sumval">${esc(s.name)}<br><span style="font-weight:400;color:var(--text-mid);font-size:13px">${esc(s.email)}</span></span></div>
+      ${s.hasPets ? `
+      <div class="sumrow"><span class="sumkey">Service price</span><span class="sumval">$${basePrice.toFixed(2)}</span></div>
+      <div class="sumrow"><span class="sumkey">🐾 Pet fee</span><span class="sumval">+$10.00</span></div>` : ''}
+      <div class="sumrow"><span class="sumkey">Total due today</span><span class="sumval priceval">$${price.toFixed(2)}</span></div>
+    </div>
+
+    <div class="pay-section">
+      <div class="pay-section-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Payment details
+      </div>
+
+      <div class="card-logos">
+        <div class="card-logo">VISA</div>
+        <div class="card-logo">MC</div>
+        <div class="card-logo">AMEX</div>
+        <div class="card-logo">DISCOVER</div>
+      </div>
+
+      <div class="fgrid" style="margin-bottom:14px">
+        <div class="fld s2">
+          <label>Cardholder name</label>
+          <input type="text" id="card-name" placeholder="Name as it appears on card" value="${esc(s.name)}" autocomplete="cc-name">
+        </div>
+      </div>
+
+      <div class="fld" style="margin-bottom:14px">
+        <label>Card number</label>
+        <div class="card-el-wrap" id="card-number-el"></div>
+      </div>
+      <div class="fgrid" style="margin-bottom:4px">
+        <div class="fld">
+          <label>Expiration date</label>
+          <div class="card-el-wrap" id="card-expiry-el"></div>
+        </div>
+        <div class="fld">
+          <label>Security code (CVC)</label>
+          <div class="card-el-wrap" id="card-cvc-el"></div>
+        </div>
+      </div>
+      <div class="card-err" id="card-err"></div>
+
+      ${s.sub ? (()=>{
+        // Use today as base — s.date is null for subscriptions (date is picked after first charge)
+        if (s.freq==='biweekly') {
+          const nd=new Date(); nd.setDate(nd.getDate()+14);
+          const ndStr=nd.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+          return `<div class="sub-note" style="margin-top:14px">Bi-weekly subscription — $${price.toFixed(2)} every 2 weeks. Your card is charged today, then automatically <strong>every 14 days</strong> starting ${ndStr}. Cancel any time.</div>`;
+        }
+        const nd=new Date(); nd.setMonth(nd.getMonth()+1);
+        const ndStr=nd.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+        const day=nd.getDate(); const sfx=day>=11&&day<=13?'th':(['th','st','nd','rd'][day%10]||'th');
+        return `<div class="sub-note" style="margin-top:14px">Monthly subscription — $${price.toFixed(2)}/mo. Your card is charged today, then automatically on the <strong>${day}${sfx} of each month</strong> starting ${ndStr}. Cancel any time.</div>`;
+      })() : ''}
+
+      <div class="trust-row">
+        <div class="trust-item">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          256-bit SSL
+        </div>
+        <div class="trust-item">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Secured by Stripe
+        </div>
+      </div>
+    </div>
+
+    ${s.sub ? `
+    <div class="terms-wrap">
+      <input type="checkbox" id="autorenewal-chk" onchange="s.autoRenewalAgreedAt=this.checked?new Date().toISOString():null;updatePayBtn()">
+      <label class="terms-label" for="autorenewal-chk">
+        I authorize <strong style="color:var(--text)">Pullman Home Cleaning LLC</strong> to automatically charge my card <strong style="color:var(--text)">$${price.toFixed(2)}</strong> ${s.freq==='biweekly'?'every 14 days':'once per month'} until I cancel. To cancel, email <a href="mailto:pullmanhomecleaning@gmail.com" style="color:var(--brand)">pullmanhomecleaning@gmail.com</a> at least 24 hours before my next appointment. No cancellation fees.
+      </label>
+    </div>` : ''}
+
+    <div class="terms-wrap">
+      <input type="checkbox" id="terms-chk" onchange="updatePayBtn()">
+      <label class="terms-label" for="terms-chk">
+        I agree to the <a href="terms.html" target="_blank">Terms &amp; Privacy Policy</a>, including the cancellation policy.
+      </label>
+    </div>
+
+    <div class="btnrow">
+      <button class="btn-back" id="back-btn" onclick="go(-1)">&#8592; Back</button>
+      <button class="btn-next" id="pay-btn" onclick="processPayment()" disabled style="opacity:0.45;cursor:not-allowed;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Pay $${price.toFixed(2)} securely
+      </button>
+    </div>`;
+
+  ensureStripe();
+  if (cardNumber) {
+    setTimeout(() => {
+      if (document.getElementById('card-number-el')) cardNumber.mount('#card-number-el');
+      if (document.getElementById('card-expiry-el')) cardExpiry.mount('#card-expiry-el');
+      if (document.getElementById('card-cvc-el'))    cardCvc.mount('#card-cvc-el');
+    }, 60);
+  }
+}
+
+function updatePayBtn() {
+  const terms = document.getElementById('terms-chk')?.checked;
+  const renewal = document.getElementById('autorenewal-chk');
+  const ok = terms && (!renewal || renewal.checked);
+  const btn = document.getElementById('pay-btn');
+  if (btn) { btn.disabled = !ok; btn.style.opacity = ok ? '' : '0.45'; btn.style.cursor = ok ? '' : 'not-allowed'; }
+}
+
+async function processPayment() {
+  /* ── Terms agreement guard ── */
+  const termsChk = document.getElementById('terms-chk');
+  if (!termsChk || !termsChk.checked) {
+    if (termsChk) { termsChk.closest('.terms-wrap').style.outline = '1.5px solid var(--brand)'; }
+    return;
+  }
+
+  const v     = SVCS.find(x => x.id === s.svcId);
+  const price = (s.sub ? v.sub : v.one) + (s.hasPets ? 10 : 0);
+
+  /* ── Demo mode: skip payment ── */
+  if (!STRIPE_LIVE) {
+    if (s.date) await saveBooking(null);
+    s.step = 7; render(); return;
+  }
+
+  const cardName = (document.getElementById('card-name')?.value || '').trim();
+  if (!cardName) { document.getElementById('card-err').textContent='Please enter the name on your card.'; return; }
+
+  const payBtn  = document.getElementById('pay-btn');
+  const backBtn = document.getElementById('back-btn');
+  payBtn.disabled = backBtn.disabled = true;
+  payBtn.innerHTML = '<div class="btn-spinner"></div> Processing…';
+
+  const showErr = (msg) => {
+    document.getElementById('card-err').textContent = msg;
+    payBtn.disabled = backBtn.disabled = false;
+    payBtn.innerHTML = `Pay $${price.toFixed(2)} →`;
+  };
+
+  try {
+    const desc = `${v.type} — ${v.name} · ${s.complex}`;
+    let paymentIntentId;
+
+    if (s.sub) {
+      /* ── Subscription flow ── */
+      /* 1. Create a PaymentMethod from the card fields */
+      const { paymentMethod, error: pmErr } = await stripeInst.createPaymentMethod({
+        type: 'card',
+        card: cardNumber,
+        billing_details: { name: cardName, email: s.email }
+      });
+      if (pmErr) { showErr(pmErr.message); return; }
+
+      /* 2. Server creates Customer + Subscription, returns clientSecret */
+      const resp = await fetch('/.netlify/functions/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: price, description: desc,
+          customerName: s.name, customerEmail: s.email,
+          isSubscription: true, paymentMethodId: paymentMethod.id, freq: s.freq,
+          phone: s.phone, address: s.address, unit: s.unit,
+          complex: s.complex, serviceId: s.svcId,
+          photoConsent: s.photoConsent || false,
+          hasPets: s.hasPets || false
+        })
+      });
+      const data = await resp.json();
+      if (data.error) throw new Error(data.error);
+      if (data.subscriptionId) s.subscriptionId = data.subscriptionId;
+
+      /* 3. Confirm the first invoice's payment */
+      const result = await stripeInst.confirmCardPayment(data.clientSecret, {
+        payment_method: paymentMethod.id,
+        receipt_email: s.email
+      });
+      if (result.error) { showErr(result.error.message); return; }
+      paymentIntentId = result.paymentIntent.id;
+
+    } else {
+      /* ── One-time flow ── */
+      /* 1. Create Payment Intent server-side */
+      const resp = await fetch('/.netlify/functions/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: price, description: desc,
+          customerName: s.name, customerEmail: s.email,
+          isSubscription: false, bookingDate: s.date
+        })
+      });
+      const data = await resp.json();
+      if (data.error) throw new Error(data.error);
+
+      /* 2. Confirm card payment client-side */
+      const result = await stripeInst.confirmCardPayment(data.clientSecret, {
+        payment_method: {
+          card: cardNumber,
+          billing_details: { name: cardName, email: s.email }
+        },
+        receipt_email: s.email
+      });
+      if (result.error) { showErr(result.error.message); return; }
+      paymentIntentId = result.paymentIntent.id;
+    }
+
+    /* ── Save to Firebase (one-time only; subscriptions get a booking link by email) ── */
+    let bookingDocId = null;
+    if (!s.sub) {
+      const saveResult = await saveBooking(paymentIntentId);
+      if (!saveResult.ok) {
+        if (saveResult.reason === 'taken') {
+          showErr('That time slot was just taken — please go back and pick another time.');
+          delete availCache[s.date];
+        } else {
+          showErr('Booking could not be saved. Please try again or contact us.');
+        }
+        return;
+      }
+      bookingDocId = `${s.date}__${s.time.replace(/[: ]/g,'_')}`;
+    }
+
+    /* ── For subscriptions: save consent record to Firestore ── */
+    if (s.sub && FIREBASE_LIVE) {
+      try {
+        const consentRef = db.collection('subscriptionConsents').doc(s.subscriptionId || `pending_${Date.now()}`);
+        await consentRef.set({
+          email:               s.email,
+          name:                s.name,
+          subscriptionId:      s.subscriptionId || null,
+          photoConsent:        s.photoConsent || false,
+          termsAgreedAt:       new Date().toISOString(),
+          autoRenewalAgreedAt: s.autoRenewalAgreedAt || new Date().toISOString(),
+          createdAt:           firebase.firestore.FieldValue.serverTimestamp()
+        });
+        /* photoConsent is stored in Stripe metadata and written to each token by the webhook */
+      } catch(consentErr) { console.warn('Consent record save failed:', consentErr); }
+    }
+
+    /* ── Update CRM (fire-and-forget — don't block the confirmation screen) ── */
+    try {
+      const v_crm = SVCS.find(x => x.id === s.svcId);
+      fetch('/.netlify/functions/upsert-customer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email:               s.email,
+          name:                s.name,
+          phone:               s.phone,
+          address:             s.address + (s.unit && s.unit !== 'N/A' ? ', Unit ' + s.unit : ''),
+          notes:               s.notes || '',
+          service:             v_crm ? (v_crm.type + ' — ' + v_crm.name) : '',
+          price:               (s.sub ? v_crm.sub : v_crm.one) + (s.hasPets ? 10 : 0),
+          frequency:           s.freq || 'once',
+          subscriptionActive:  Boolean(s.sub),
+          subscriptionId:      s.subscriptionId || null,
+          bookingId:           bookingDocId,
+          photoConsent:        s.photoConsent || false,
+          hasPets:             s.hasPets || false,
+          termsAgreedAt:       new Date().toISOString(),
+          autoRenewalAgreedAt: s.sub ? (s.autoRenewalAgreedAt || new Date().toISOString()) : null
+        })
+      }).catch(e => console.warn('CRM upsert failed:', e));
+    } catch(crmErr) { console.warn('CRM upsert error:', crmErr); }
+
+    s.step = 7;
+    render();
+
+    /* send confirmation email — one-time only; subscriptions get their booking link via the stripe webhook */
+    if (!s.sub && bookingDocId) {
+      fetch('/.netlify/functions/send-booking-confirmation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bookingId: bookingDocId })
+      }).catch(e => console.warn('Confirmation email failed:', e));
+    }
+
+  } catch(e) {
+    console.error(e);
+    document.getElementById('card-err').textContent = e.message || 'An unexpected error occurred. Please try again.';
+    payBtn.disabled = backBtn.disabled = false;
+    payBtn.innerHTML = `Pay $${price.toFixed(2)} →`;
+  }
+}
+
+/* ── Step 6 (index 5): Done / Confirmation ─────────────────────── */
+/* ── Step 6: Done / Confirmation ───────────────────────────────── */
+function doneStep(c) {
+  const v     = SVCS.find(x => x.id === s.svcId);
+  const price = s.sub ? (tokenData ? tokenData.amount : v.sub) : v.one;
+
+  /* ── Token booking done ── */
+  if (tokenMode && s.date) {
+    const dstr = new Date(s.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+    c.innerHTML = `
+      <div style="text-align:center;padding-top:32px;">
+        <div style="width:64px;height:64px;border-radius:50%;background:rgba(72,199,142,0.15);border:2px solid rgba(72,199,142,0.4);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 22px;">✓</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:10px;">You're booked!</div>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.7;max-width:340px;margin:0 auto 28px;">
+          See you on <strong style="color:var(--text)">${dstr} at ${s.time}</strong>.<br>A confirmation email is on its way to ${esc(s.email)}.
+        </p>
+        <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:20px;text-align:left;max-width:360px;margin:0 auto 28px;">
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid var(--border);font-size:14px;">
+            <span style="color:var(--text-mid)">Service</span>
+            <span style="color:var(--text);font-weight:600">${v.type} — ${v.name}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid var(--border);font-size:14px;">
+            <span style="color:var(--text-mid)">Date &amp; Time</span>
+            <span style="color:var(--text);font-weight:600;text-align:right">${dstr}<br>${s.time}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:14px;">
+            <span style="color:var(--text-mid)">Address</span>
+            <span style="color:var(--text);font-weight:600;text-align:right;max-width:200px">${s.address}${s.unit && s.unit !== 'N/A' ? ', Unit '+s.unit : ''}</span>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--text-low);line-height:1.7;max-width:320px;margin:0 auto;">
+          Need to reschedule? Email <a href="mailto:pullmanhomecleaning@gmail.com" style="color:var(--brand)">pullmanhomecleaning@gmail.com</a> at least 24 hours before — no fees.
+        </p>
+        <div style="margin-top:26px;font-size:14px;color:var(--text-low);">Follow us: <strong style="color:var(--brand)">@pullmanhomecleaning</strong></div>
+      </div>`;
+    return;
+  }
+
+  /* ── Subscription sign-up done (no date booked yet) ── */
+  if (s.sub) {
+    c.innerHTML = `
+      <div style="text-align:center;padding-top:32px;">
+        <div style="width:64px;height:64px;border-radius:50%;background:rgba(72,199,142,0.15);border:2px solid rgba(72,199,142,0.4);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 22px;">✓</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:10px;">You're subscribed!</div>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.7;max-width:340px;margin:0 auto 28px;">
+          Your card has been charged <strong style="color:var(--text)">$${price.toFixed(2)}</strong>. Check <strong style="color:var(--text)">${esc(s.email)}</strong> — we're sending a link to book your first clean right now.
+        </p>
+        <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:20px;text-align:left;max-width:360px;margin:0 auto 28px;">
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid var(--border);font-size:14px;">
+            <span style="color:var(--text-mid)">Service</span>
+            <span style="color:var(--text);font-weight:600">${v.type} — ${v.name}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid var(--border);font-size:14px;">
+            <span style="color:var(--text-mid)">Frequency</span>
+            <span style="color:var(--text);font-weight:600">${s.freq==='biweekly'?'Every 2 weeks':'Monthly'}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:14px;">
+            <span style="color:var(--text-mid)">Next charge</span>
+            <span style="color:var(--text);font-weight:600">${s.freq==='biweekly'?'In 14 days':'In 1 month'}</span>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--text-low);line-height:1.7;max-width:320px;margin:0 auto;">
+          Each time you're charged you'll receive a fresh booking link to pick your date.<br>
+          To cancel, email <a href="mailto:pullmanhomecleaning@gmail.com" style="color:var(--brand)">pullmanhomecleaning@gmail.com</a>.
+        </p>
+        <div style="margin-top:26px;font-size:14px;color:var(--text-low);">Follow us: <strong style="color:var(--brand)">@pullmanhomecleaning</strong></div>
+      </div>`;
+    return;
+  }
+
+  /* ── One-time booking done ── */
+  const dstr = new Date(s.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  c.innerHTML = `
+    <div style="text-align:center;padding-top:32px;">
+      <div style="width:64px;height:64px;border-radius:50%;background:rgba(72,199,142,0.15);border:2px solid rgba(72,199,142,0.4);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 22px;">✓</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:28px;color:#fff;margin-bottom:10px;">You're booked!</div>
+      <p style="font-size:14px;color:var(--text-mid);line-height:1.7;max-width:340px;margin:0 auto 28px;">
+        A confirmation email is on its way to <strong style="color:var(--text)">${esc(s.email)}</strong>. We'll send a reminder the evening before your clean.
+      </p>
+      <div style="background:var(--bg2);border:0.5px solid var(--border);border-radius:12px;padding:20px;text-align:left;max-width:360px;margin:0 auto 28px;">
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid var(--border);font-size:14px;">
+          <span style="color:var(--text-mid)">Service</span>
+          <span style="color:var(--text);font-weight:600">${v.type} — ${v.name}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid var(--border);font-size:14px;">
+          <span style="color:var(--text-mid)">Date &amp; Time</span>
+          <span style="color:var(--text);font-weight:600;text-align:right">${dstr}<br>${s.time}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:0.5px solid var(--border);font-size:14px;">
+          <span style="color:var(--text-mid)">Address</span>
+          <span style="color:var(--text);font-weight:600;text-align:right;max-width:200px">${s.address}${s.unit && s.unit !== 'N/A' ? ', Unit '+s.unit : ''}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:14px;">
+          <span style="color:var(--text-mid)">Charged</span>
+          <span style="font-family:'DM Serif Display',serif;font-size:20px;color:#22863A;">$${price.toFixed(2)}</span>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--text-low);line-height:1.7;max-width:340px;margin:0 auto;">
+        Need to cancel or reschedule? Email <a href="mailto:pullmanhomecleaning@gmail.com" style="color:var(--brand)">pullmanhomecleaning@gmail.com</a> at least 24 hours before — no fees.
+      </p>
+      <div style="margin-top:26px;font-size:14px;color:var(--text-low);">
+        Follow us on Instagram: <strong style="color:var(--brand)">@pullmanhomecleaning</strong>
+      </div>
+    </div>`;
+}
+
+/* ── Step 7: Confirm booking (token mode only) ─────────────────── */
+function confirmStep(c) {
+  const v      = SVCS.find(x => x.id === s.svcId);
+  const price  = tokenData ? tokenData.amount : v.sub;
+  const dstr   = new Date(s.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  const fLabel = s.freq==='biweekly' ? 'Bi-weekly subscription' : 'Monthly subscription';
+  c.innerHTML = `
+    <div class="shead"><h1>Confirm your booking</h1><p>Review your details, then lock in your time.</p></div>
+    <div class="sumcard">
+      <div class="sumtitle">Booking details</div>
+      <div class="sumrow"><span class="sumkey">Service</span><span class="sumval">${v.type} — ${v.name}</span></div>
+      <div class="sumrow"><span class="sumkey">Frequency</span><span class="sumval">${fLabel}</span></div>
+      <div class="sumrow"><span class="sumkey">Date &amp; Time</span><span class="sumval">${dstr} at ${s.time}</span></div>
+      <div class="sumrow">
+        <span class="sumkey">Location</span>
+        <span class="sumval">
+          ${esc(s.address)}${s.unit&&s.unit!=='N/A'?', Unit '+esc(s.unit):''}
+          <br><span style="font-size:11px;color:var(--text-low);font-weight:400;">Locked to your subscription address. To update, email us.</span>
+        </span>
+      </div>
+      <div class="sumrow"><span class="sumkey">Payment</span><span class="sumval" style="color:var(--teal)">Covered by subscription ✓</span></div>
+    </div>
+    <div class="btnrow">
+      <button class="btn-back" onclick="go(-1)">&#8592; Back</button>
+      <button class="btn-next" id="confirm-btn" onclick="confirmTokenBooking()">Confirm my booking</button>
+    </div>`;
+}
+
+async function confirmTokenBooking() {
+  const btn = document.getElementById('confirm-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="btn-spinner"></div> Booking…';
+
+  try {
+    if (FIREBASE_LIVE && _token) {
+      const v        = SVCS.find(x => x.id === s.svcId);
+      const slotRef    = db.collection('bookings').doc(`${s.date}__${s.time.replace(/[: ]/g,'_')}`);
+      const slotsRef   = db.collection('slots').doc(`${s.date}__${s.time.replace(/[: ]/g,'_')}`);
+      const tokenRef   = db.collection('subscriptionTokens').doc(_token);
+      const dayLockRef = db.collection('dayLocks').doc(s.date);
+      const dayQuery   = db.collection('slots').where('date','==',s.date);
+
+      await db.runTransaction(async tx => {
+        const [daySnap, tokenSnap] = await Promise.all([tx.get(dayQuery), tx.get(tokenRef), tx.get(dayLockRef)]);
+
+        if (!tokenSnap.exists || tokenSnap.data().used) {
+          throw Object.assign(new Error('Token already used'), { code:'TOKEN_USED' });
+        }
+
+        const existing = daySnap.docs.map(d => d.data());
+        const newMin   = slotToMinutes(s.time);
+        for (const b of existing) {
+          const bSvc = SVCS.find(x => x.id === b.serviceId);
+          const bMin = slotToMinutes(b.time);
+          const bDur = bSvc ? bSvc.schedMinutes : 60;
+          if (windowsOverlap(newMin, v.schedMinutes, bMin, bDur)) {
+            throw Object.assign(new Error('OVERLAP'), { code:'TAKEN' });
+          }
+        }
+
+        /* Use address from the token doc re-read inside the transaction —
+           prevents a console-savvy user from substituting a different address */
+        const lockedAddress     = tokenSnap.data().address     || '';
+        const lockedUnit        = tokenSnap.data().unit        || '';
+        const lockedComplex     = tokenSnap.data().complex     || '';
+        const lockedPhotoConsent = tokenSnap.data().photoConsent || false;
+
+        // Touch dayLock so concurrent saveBooking/confirmTokenBooking transactions conflict+retry
+        tx.set(dayLockRef, { lastUpdated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+        // Write public availability record (no PII)
+        tx.set(slotsRef, { date:s.date, time:s.time, serviceId:s.svcId, schedMinutes:v.schedMinutes });
+        tx.set(slotRef, {
+          date:s.date, time:s.time, name:s.name, email:s.email,
+          address:lockedAddress, unit:lockedUnit, complex:lockedComplex, notes:'',
+          service: v.type + ' — ' + v.name, serviceId:s.svcId,
+          subscription:true, frequency:s.freq,
+          price: tokenData ? tokenData.amount : v.sub,
+          paid:true, paidViaSubscription:true,
+          subscriptionId: tokenData ? tokenData.subscriptionId : null,
+          bookingToken: _token,
+          photoConsent: lockedPhotoConsent,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        tx.update(tokenRef, {
+          used:true,
+          usedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          bookedDate: s.date,
+          bookedTime: s.time
+        });
+      });
+
+      delete availCache[s.date];
+
+      /* Reset consecutive unused cycle counter — customer booked successfully */
+      if (tokenData && tokenData.subscriptionId) {
+        db.collection('subscriptions').doc(tokenData.subscriptionId)
+          .update({ consecutiveUnusedCycles: 0 })
+          .catch(e => console.warn('Counter reset failed:', e.message));
+      }
+
+      /* Update CRM with this token booking */
+      try {
+        const v_crm = SVCS.find(x => x.id === s.svcId);
+        fetch('/.netlify/functions/upsert-customer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email:              s.email,
+            name:               s.name,
+            phone:              tokenData ? tokenData.phone : '',
+            address:            (tokenData ? tokenData.address : s.address) + (tokenData && tokenData.unit && tokenData.unit !== 'N/A' ? ', Unit ' + tokenData.unit : ''),
+            service:            v_crm ? (v_crm.type + ' — ' + v_crm.name) : '',
+            price:              tokenData ? tokenData.amount : (v_crm ? v_crm.sub : 0),
+            frequency:          s.freq || 'monthly',
+            subscriptionActive: true,
+            subscriptionId:     tokenData ? tokenData.subscriptionId : null,
+            bookingId:          `${s.date}__${s.time.replace(/[: ]/g,'_')}`,
+            photoConsent:       tokenData ? (tokenData.photoConsent || false) : false,
+            hasPets:            tokenData ? (tokenData.hasPets || false) : false
+          })
+        }).catch(e => console.warn('CRM upsert failed (token booking):', e));
+      } catch(crmErr) { console.warn('CRM upsert error (token booking):', crmErr); }
+    }
+
+    s.step = 7;
+    render();
+
+    try {
+      const v2 = SVCS.find(x => x.id === s.svcId);
+      emailjs.send('service_5llh4ic', 'template_cbup27s', {
+        customer_name:  s.name,
+        customer_email: s.email,
+        service_name:   v2.type + ' — ' + v2.name,
+        date:           new Date(s.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'}),
+        time:           s.time,
+        address:        s.address + (s.unit && s.unit !== 'N/A' ? ', Unit ' + s.unit : '')
+      });
+    } catch(emailErr) { console.warn('EmailJS confirmation failed:', emailErr); }
+
+  } catch(e) {
+    btn.disabled = false;
+    btn.innerHTML = 'Confirm my booking';
+    if (e.code === 'TAKEN') {
+      alert('That time slot was just taken — please pick another time.');
+      go(-1);
+    } else if (e.code === 'TOKEN_USED') {
+      alert('This booking link has already been used. Check your email for your next one.');
+    } else {
+      console.error(e);
+      alert('Something went wrong. Please try again or email pullmanhomecleaning@gmail.com');
+    }
+  }
+}
+
+/* ── Token mode: validate link and pre-fill state ──────────────── */
+async function initTokenMode() {
+  document.getElementById('pinner').style.width = '25%';
+  document.getElementById('strow').innerHTML = '';
+  document.getElementById('page').innerHTML = `
+    <div class="loading-wrap" style="padding-top:80px">
+      <div class="spinner"></div>
+      <p>Validating your subscription link…</p>
+    </div>`;
+
+  try {
+    if (!FIREBASE_LIVE) {
+      tokenData = {
+        name:'Demo Subscriber', email:'demo@example.com',
+        serviceId:'wh2', freq:'monthly', amount:135,
+        address:'123 Demo St', unit:'101', complex:'The Hills on Grand',
+        subscriptionId:'sub_demo'
+      };
+    } else {
+      const doc = await db.collection('subscriptionTokens').doc(_token).get();
+      if (!doc.exists) { showTokenError('This booking link is invalid or has expired.'); return; }
+      const data = doc.data();
+      if (data.used) { showTokenError('This booking link has already been used.<br>Your next link arrives after your next charge.'); return; }
+      if (data.expiresAt.toDate() < new Date()) { showTokenError("This booking link has expired (30-day limit).<br>Email us and we'll send a fresh one."); return; }
+      tokenData = data;
+    }
+
+    tokenMode   = true;
+    s.name      = tokenData.name      || '';
+    s.email     = tokenData.email     || '';
+    s.svcId     = tokenData.serviceId || '';
+    s.freq      = tokenData.freq      || 'monthly';
+    s.sub       = true;
+    s.address   = tokenData.address   || '';
+    s.unit      = tokenData.unit      || '';
+    s.complex   = tokenData.complex   || '';
+    s.bathrooms = bathsFromSvc(tokenData.serviceId);
+    s.step      = 3;  // skip directly to Date — service is locked to subscription
+    render();
+
+  } catch(e) {
+    console.error(e);
+    showTokenError('Something went wrong validating your booking link. Please try again or email pullmanhomecleaning@gmail.com.');
+  }
+}
+
+/* ── Token mode: show error page ────────────────────────────── */
+function showTokenError(msg) {
+  document.getElementById('pinner').style.width = '0%';
+  document.getElementById('strow').innerHTML   = '';
+  document.getElementById('page').innerHTML    = `
+    <div style="padding:60px 20px;text-align:center">
+      <div style="font-size:48px;margin-bottom:16px">⚠️</div>
+      <h2 style="font-family:'DM Serif Display',serif;margin-bottom:12px;color:#fff">Link issue</h2>
+      <p style="color:var(--text-mid);line-height:1.6;max-width:360px;margin:0 auto">${msg}</p>
+      <p style="margin-top:20px"><a href="mailto:pullmanhomecleaning@gmail.com" style="color:var(--brand)">pullmanhomecleaning@gmail.com</a></p>
+    </div>`;
+}
+
+/* ── Boot ────────────────────────────────────────────────────── */
+if (_token) {
+  initTokenMode();
+} else {
+  render();
+}
+</script>
+</body>
+</html>
